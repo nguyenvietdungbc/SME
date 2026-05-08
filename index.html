@@ -1,0 +1,1903 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>SME ONE — Tổng quan Sản phẩm Dịch vụ KHDN VVN | VietinBank</title>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --red: #D71249; --red-alt: #E21D50; --red-dark: #B01040; --red-light: #fde8ef;
+      --blue-dark: #005993; --blue-mid: #007DB7; --blue-light: #7ED3F7; --blue-pale: #e6f4fb;
+      --gold: #F4A836; --gold-light: #fef4e2; --navy: #005993;
+      --gray: #6b7280; --gray-light: #f3f4f6; --white: #ffffff;
+      --border: #e5e7eb; --shadow: 0 4px 24px rgba(0,0,0,0.08);
+      --shadow-lg: 0 8px 40px rgba(0,0,0,0.14); --radius: 12px; --radius-lg: 20px; --transition: 0.25s ease;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Be Vietnam Pro',sans-serif; background:#f8f9fb; color:#1f2937; line-height:1.7; -webkit-text-size-adjust:100%; text-size-adjust:100%; }
+    /* Prevent iOS zoom on input focus */
+    input, textarea, select { font-size: 16px !important; }
+    @media (min-width:600px){
+      input, textarea, select { font-size: inherit !important; }
+    }
+    /* Safe area for iPhone X+ */
+    .navbar { padding-top: env(safe-area-inset-top); }
+    .chat-bubble, .admin-bar, .toast { padding-bottom: env(safe-area-inset-bottom, 0); }
+
+    /* TOPBAR */
+    .topbar { background:var(--blue-dark); color:rgba(255,255,255,0.85); font-size:0.8rem; padding:6px 0; text-align:center; letter-spacing:0.3px; }
+
+    /* NAVBAR */
+    .navbar { background:var(--white); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:1000; box-shadow:0 2px 12px rgba(0,0,0,0.06); }
+    .navbar-inner { max-width:100%; margin:0 auto; padding:0 24px; display:flex; align-items:center; justify-content:space-between; height:64px; }
+    .logo { display:flex; align-items:center; gap:12px; text-decoration:none; cursor:pointer; }
+    .logo-icon { width:44px; height:44px; background:linear-gradient(135deg,var(--red),var(--red-dark)); border-radius:10px; display:flex; align-items:center; justify-content:center; color:white; font-size:0.75rem; font-weight:800; letter-spacing:-0.5px; text-align:center; flex-direction:column; }
+    .logo-text strong { display:block; font-size:1rem; color:var(--navy); font-weight:700; }
+    .logo-text span { font-size:0.72rem; color:var(--gray); }
+    .nav-right { display:flex; align-items:center; gap:10px; }
+    .btn-admin { background:var(--gray-light); border:1px solid var(--border); color:var(--gray); font-size:0.8rem; font-weight:600; padding:8px 16px; border-radius:8px; cursor:pointer; display:flex; align-items:center; gap:6px; transition:var(--transition); font-family:inherit; }
+    .btn-admin:hover { background:var(--blue-dark); color:white; border-color:var(--blue-dark); }
+    @media (max-width:480px) { .admin-btn-text { display:none; } }
+    .btn-admin.active { background:#16a34a; color:white; border-color:#16a34a; }
+
+    /* TWO-PANEL */
+    .app-layout { display:flex; min-height:calc(100vh - 104px); }
+    .sidebar { width:270px; flex-shrink:0; background:var(--white); border-right:1px solid var(--border); position:sticky; top:64px; height:calc(100vh - 64px); overflow-y:auto; display:flex; flex-direction:column; box-shadow:2px 0 12px rgba(0,0,0,0.04); }
+    .sidebar-logo { padding:16px 20px 12px; border-bottom:1px solid var(--border); }
+    .sidebar-logo .badge { background:linear-gradient(135deg,var(--red),var(--red-dark)); color:white; font-size:0.65rem; font-weight:700; padding:2px 8px; border-radius:6px; letter-spacing:0.3px; }
+    .sidebar-nav { padding:8px 0; flex:1; }
+    .sidebar-group { margin-bottom:4px; }
+    .sidebar-group-header { display:flex; align-items:center; gap:8px; padding:10px 20px 6px; cursor:pointer; user-select:none; }
+    .sidebar-group-header:hover { background:#f9fafb; }
+    .sidebar-group-label { font-size:0.68rem; font-weight:800; text-transform:uppercase; letter-spacing:0.8px; color:var(--gray); flex:1; }
+    .sidebar-group-icon { width:26px; height:26px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:0.75rem; flex-shrink:0; }
+    .sidebar-group-icon.red { background:var(--red-light); color:var(--red); }
+    .sidebar-group-icon.blue { background:var(--blue-pale); color:var(--blue-dark); }
+    .sidebar-group-icon.green { background:#f0fdf4; color:#16a34a; }
+    .sidebar-chevron { font-size:0.7rem; color:var(--gray); transition:transform 0.2s; }
+    .sidebar-group.open .sidebar-chevron { transform:rotate(90deg); }
+    .sidebar-children { display:none; }
+    .sidebar-group.open .sidebar-children { display:block; }
+    .sidebar-item { display:flex; align-items:center; gap:10px; padding:9px 20px 9px 32px; cursor:pointer; font-size:0.82rem; font-weight:500; color:#374151; transition:var(--transition); border-left:3px solid transparent; }
+    .sidebar-item:hover { background:var(--blue-pale); color:var(--blue-dark); border-left-color:var(--blue-light); }
+    .sidebar-item.active { background:var(--blue-pale); color:var(--blue-dark); font-weight:700; border-left-color:var(--blue-dark); }
+    .sidebar-item i { width:16px; text-align:center; font-size:0.78rem; flex-shrink:0; color:var(--gray); }
+    .sidebar-item.active i { color:var(--blue-dark); }
+    .sidebar-item-home { padding-left:20px; }
+    .sidebar-footer { padding:14px 20px; border-top:1px solid var(--border); font-size:0.72rem; color:var(--gray); line-height:1.6; }
+
+    /* CONTENT PANEL */
+    .content-panel { flex:1; overflow-y:auto; background:#f8f9fb; min-width:0; }
+    .panel { display:none; }
+    .panel.active { display:block; }
+    .content-panel .section { max-width:100%; padding:48px 40px; }
+    .content-panel .hero { padding:48px 40px 56px; }
+
+    /* HERO */
+    .hero { background:linear-gradient(135deg,var(--blue-dark) 0%,#004a7c 45%,var(--blue-mid) 100%); position:relative; overflow:hidden; }
+    .hero::before { content:''; position:absolute; top:-60px; right:-80px; width:420px; height:420px; background:var(--red); border-radius:50%; opacity:0.12; }
+    .hero::after { content:''; position:absolute; bottom:-100px; left:-60px; width:300px; height:300px; background:var(--blue-light); border-radius:50%; opacity:0.1; }
+    .hero-inner { max-width:100%; position:relative; z-index:1; }
+    .hero-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(244,168,54,0.15); border:1px solid rgba(244,168,54,0.35); color:var(--gold); font-size:0.8rem; font-weight:600; padding:6px 16px; border-radius:100px; margin-bottom:20px; letter-spacing:0.4px; }
+    .hero h1 { font-size:clamp(1.8rem,3.5vw,2.8rem); font-weight:800; color:white; line-height:1.2; margin-bottom:16px; }
+    .hero h1 .accent { color:var(--gold); }
+    .hero-desc { font-size:1rem; color:rgba(255,255,255,0.78); max-width:640px; margin-bottom:32px; }
+    .hero-stats { display:flex; gap:28px; flex-wrap:wrap; }
+    .hero-stat { display:flex; align-items:center; gap:10px; }
+    .hero-stat-icon { width:40px; height:40px; background:rgba(255,255,255,0.1); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1rem; }
+    .hero-stat-text strong { display:block; color:white; font-size:1.1rem; font-weight:700; }
+    .hero-stat-text span { color:rgba(255,255,255,0.6); font-size:0.75rem; }
+
+    /* SECTIONS */
+    .section { max-width:100%; padding:48px 40px; }
+    .section-header { display:flex; align-items:flex-start; gap:16px; margin-bottom:32px; }
+    .section-num { width:48px; height:48px; background:linear-gradient(135deg,var(--blue-dark),var(--blue-mid)); color:white; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.1rem; font-weight:800; flex-shrink:0; }
+    .section-num.red { background:linear-gradient(135deg,var(--red),var(--red-dark)); }
+    .section-num.green { background:linear-gradient(135deg,#16a34a,#15803d); }
+    .section-title h2 { font-size:1.45rem; font-weight:700; color:var(--blue-dark); }
+    .section-title p { color:var(--gray); font-size:0.88rem; margin-top:4px; }
+    .section-divider { border:none; border-top:2px solid var(--border); margin:0 40px; }
+
+    /* CARDS */
+    .cards { display:grid; gap:18px; }
+    .cards-2 { grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); }
+    .cards-3 { grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); }
+    .card { background:var(--white); border-radius:var(--radius-lg); padding:26px; border:1px solid var(--border); box-shadow:var(--shadow); transition:var(--transition); }
+    .card:hover { box-shadow:var(--shadow-lg); transform:translateY(-2px); }
+    .card-icon { width:50px; height:50px; border-radius:13px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; margin-bottom:14px; }
+    .card-icon.red { background:var(--red-light); color:var(--red); }
+    .card-icon.gold { background:var(--gold-light); color:#d97706; }
+    .card-icon.blue { background:var(--blue-pale); color:var(--blue-mid); }
+    .card-icon.green { background:#f0fdf4; color:#16a34a; }
+    .card-icon.purple { background:#f5f3ff; color:#7c3aed; }
+    .card-icon.teal { background:#f0fdfa; color:#0d9488; }
+    .card-icon.navy { background:var(--blue-pale); color:var(--blue-dark); }
+    .card h3 { font-size:1rem; font-weight:700; color:var(--blue-dark); margin-bottom:8px; }
+    .card p, .card li { font-size:0.86rem; color:#4b5563; line-height:1.7; }
+    .card ul { padding-left:16px; margin-top:8px; }
+    .card li { margin-bottom:3px; }
+    .card-tag { display:inline-block; background:var(--red-light); color:var(--red); font-size:0.7rem; font-weight:600; padding:3px 10px; border-radius:100px; margin-bottom:10px; letter-spacing:0.3px; }
+    .card-tag.blue { background:#eff6ff; color:#2563eb; }
+    .card-tag.green { background:#f0fdf4; color:#15803d; }
+    .card-tag.gold { background:var(--gold-light); color:#b45309; }
+    .card-tag.teal { background:#f0fdfa; color:#0f766e; }
+    .card-tag.purple { background:#f5f3ff; color:#6d28d9; }
+
+    /* SOLUTION HEADER */
+    .solution-header { background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue-mid) 100%); border-radius:var(--radius-lg); padding:28px 32px; color:white; margin-bottom:24px; display:flex; align-items:center; gap:20px; }
+    .solution-header.red { background:linear-gradient(135deg,var(--red) 0%,var(--red-dark) 100%); }
+    .solution-header.green { background:linear-gradient(135deg,#16a34a 0%,#15803d 100%); }
+    .solution-header-icon { width:60px; height:60px; background:rgba(255,255,255,0.15); border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:1.6rem; flex-shrink:0; }
+    .solution-header h3 { font-size:1.2rem; font-weight:700; margin-bottom:5px; }
+    .solution-header p { font-size:0.86rem; opacity:0.85; }
+
+    /* POLICY TABLE */
+    .policy-table { width:100%; border-collapse:collapse; background:white; border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow); border:1px solid var(--border); }
+    .policy-table thead { background:linear-gradient(90deg,var(--blue-dark),var(--blue-mid)); color:white; }
+    .policy-table th { padding:13px 18px; text-align:left; font-size:0.82rem; font-weight:600; letter-spacing:0.3px; }
+    .policy-table td { padding:13px 18px; font-size:0.84rem; color:#374151; border-bottom:1px solid #f3f4f6; vertical-align:top; }
+    .policy-table tr:last-child td { border-bottom:none; }
+    .policy-table tr:hover td { background:#f9fafb; }
+    .badge { display:inline-block; padding:3px 10px; border-radius:100px; font-size:0.71rem; font-weight:600; }
+    .badge-red { background:#fee2e2; color:#dc2626; }
+    .badge-green { background:#dcfce7; color:#16a34a; }
+    .badge-blue { background:var(--blue-pale); color:var(--blue-dark); }
+    .badge-gold { background:#fef3c7; color:#d97706; }
+    .badge-purple { background:#f5f3ff; color:#6d28d9; }
+
+    /* DOC LINK */
+    .doc-link { display:inline-flex; align-items:center; gap:5px; color:var(--red); text-decoration:none; font-weight:600; font-size:0.8rem; padding:5px 12px; border:1px solid var(--red); border-radius:8px; transition:var(--transition); }
+    .doc-link:hover { background:var(--red); color:white; }
+
+    /* INFO BOX */
+    .info-box { padding:14px 18px; border-radius:12px; display:flex; align-items:flex-start; gap:12px; margin-top:16px; font-size:0.84rem; line-height:1.6; }
+    .info-box.blue { background:var(--blue-pale); border:1px solid #bfdbfe; color:var(--blue-dark); }
+    .info-box.yellow { background:#fffbeb; border:1px solid #fde68a; color:#92400e; }
+    .info-box.green { background:#f0fdf4; border:1px solid #bbf7d0; color:#15803d; }
+    .info-box.red { background:var(--red-light); border:1px solid #fecdd3; color:var(--red-dark); }
+
+    /* CONNECT 34 */
+    .connect-badge { display:inline-flex; align-items:center; gap:6px; background:linear-gradient(90deg,var(--red),var(--red-dark)); color:white; font-size:0.75rem; font-weight:700; padding:4px 12px; border-radius:100px; letter-spacing:0.4px; }
+
+    /* FAQ */
+    .faq-item { background:white; border-radius:var(--radius); border:1px solid var(--border); margin-bottom:10px; overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,0.04); }
+    .faq-question { width:100%; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px 22px; background:none; border:none; cursor:pointer; font-family:inherit; font-size:0.9rem; font-weight:600; color:var(--blue-dark); text-align:left; transition:var(--transition); }
+    .faq-question:hover { background:#f9fafb; }
+    .faq-question.open { color:var(--red); }
+    .faq-q-left { display:flex; align-items:center; gap:12px; }
+    .faq-num { width:26px; height:26px; background:var(--red-light); color:var(--red); border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:700; flex-shrink:0; }
+    .faq-question.open .faq-num { background:var(--red); color:white; }
+    .faq-chevron { transition:transform 0.3s; color:var(--gray); font-size:0.82rem; }
+    .faq-question.open .faq-chevron { transform:rotate(180deg); color:var(--red); }
+    .faq-answer { display:none; padding:0 22px 18px 60px; font-size:0.85rem; color:#4b5563; line-height:1.75; border-top:1px solid #f3f4f6; }
+    @media (max-width:480px){ .faq-answer { padding:0 14px 14px 42px; } .faq-question { padding:14px 14px; } .faq-q-left { gap:8px; } }
+    .faq-answer.open { display:block; }
+    .faq-answer ul { padding-left:16px; margin-top:6px; }
+    .faq-answer li { margin-bottom:4px; }
+
+    /* STEP FLOW */
+    .step-flow { display:flex; align-items:stretch; gap:0; flex-wrap:wrap; }
+    .step-box { flex:1; min-width:130px; display:flex; flex-direction:column; align-items:center; text-align:center; padding:0 6px; }
+    .step-num { width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-weight:800; font-size:0.95rem; flex-shrink:0; }
+    .step-num.blue { background:linear-gradient(135deg,var(--blue-dark),var(--blue-mid)); }
+    .step-num.red { background:linear-gradient(135deg,var(--red),var(--red-dark)); }
+    .step-num.green { background:linear-gradient(135deg,#16a34a,#15803d); }
+    .step-connector { display:flex; align-items:center; padding-bottom:0; flex-shrink:0; color:var(--blue-light); font-size:1.1rem; margin-top:-14px; }
+    .step-content { background:var(--blue-pale); border-radius:10px; padding:11px; width:100%; margin-top:8px; }
+    .step-content.red-bg { background:#fff1f2; border:1px solid #fecdd3; }
+    .step-content.green-bg { background:#f0fdf4; border:1px solid #bbf7d0; }
+
+    /* MINI SECTION HEADER */
+    .mini-header { display:flex; align-items:center; gap:12px; margin-bottom:24px; padding-bottom:10px; border-bottom:2px solid var(--blue-pale); }
+    .mini-header-icon { width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .mini-header h3 { font-size:1.1rem; font-weight:700; color:var(--blue-dark); margin:0; }
+    .mini-header p { font-size:0.8rem; color:var(--gray); margin:2px 0 0; }
+
+    /* CUSTOMER CARD */
+    .customer-card { background:white; border-radius:var(--radius-lg); overflow:hidden; border:1px solid var(--border); box-shadow:var(--shadow); transition:var(--transition); }
+    .customer-card:hover { box-shadow:var(--shadow-lg); transform:translateY(-2px); }
+    .customer-card-header { padding:18px 22px; display:flex; align-items:center; gap:14px; }
+    .customer-card-header .icon { width:46px; height:46px; border-radius:11px; display:flex; align-items:center; justify-content:center; font-size:1.2rem; color:white; flex-shrink:0; }
+    .customer-card-header h3 { font-size:0.95rem; font-weight:700; color:var(--blue-dark); }
+    .customer-card-header span { font-size:0.76rem; color:var(--gray); }
+    .customer-card-body { padding:0 22px 20px; }
+    .pain-points { margin-bottom:14px; }
+    .pain-points h4 { font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; color:var(--gray); margin-bottom:8px; }
+    .pain-tag { display:inline-block; background:#f3f4f6; color:#374151; font-size:0.75rem; padding:3px 9px; border-radius:7px; margin:2px 2px 2px 0; font-weight:500; }
+    .solutions-list { list-style:none; }
+    .solutions-list li { display:flex; align-items:flex-start; gap:7px; font-size:0.83rem; color:#374151; padding:4px 0; border-bottom:1px solid #f3f4f6; }
+    .solutions-list li:last-child { border-bottom:none; }
+    .solutions-list li::before { content:'✓'; color:#16a34a; font-weight:700; flex-shrink:0; margin-top:1px; }
+
+    /* STAFF TABLE */
+    .staff-toolbar { display:flex; align-items:center; gap:12px; margin-bottom:14px; flex-wrap:wrap; }
+    .staff-search-wrap { flex:1; min-width:220px; position:relative; }
+    .staff-search-wrap i { position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--gray); font-size:0.82rem; }
+    .staff-search-wrap input { width:100%; padding:9px 14px 9px 34px; border:1.5px solid var(--border); border-radius:10px; font-family:inherit; font-size:0.85rem; outline:none; transition:border-color 0.2s; background:white; }
+    .staff-search-wrap input:focus { border-color:var(--blue-mid); }
+    .staff-filter-wrap select { padding:9px 14px; border:1.5px solid var(--border); border-radius:10px; font-family:inherit; font-size:0.83rem; color:#374151; background:white; outline:none; cursor:pointer; }
+    .staff-count { font-size:0.76rem; color:var(--gray); white-space:nowrap; background:var(--gray-light); padding:5px 11px; border-radius:8px; }
+    .staff-table-wrap { background:white; border-radius:var(--radius-lg); overflow:hidden; border:1px solid var(--border); box-shadow:var(--shadow); }
+    .staff-table { width:100%; border-collapse:collapse; }
+    .staff-table thead { background:linear-gradient(90deg,var(--blue-dark),var(--blue-mid)); color:white; }
+    .staff-table th { padding:12px 15px; text-align:left; font-size:0.78rem; font-weight:600; letter-spacing:0.3px; }
+    .staff-table td { padding:12px 15px; font-size:0.83rem; color:#374151; border-bottom:1px solid #f3f4f6; vertical-align:middle; }
+    @media (max-width:600px){ .staff-table td, .staff-table th { padding:9px 8px; font-size:0.74rem; white-space:nowrap; } }
+    .staff-table tbody tr:last-child td { border-bottom:none; }
+    .staff-table tbody tr:hover td { background:#f9fafb; }
+    .staff-table tbody tr.hidden { display:none; }
+    .kv-badge { display:inline-block; padding:3px 10px; border-radius:100px; font-size:0.71rem; font-weight:700; }
+    .kv-badge.kv1 { background:var(--blue-pale); color:var(--blue-dark); }
+    .kv-badge.kv2 { background:#fef3c7; color:#92400e; }
+    .kv-badge.kv3 { background:#f0fdf4; color:#15803d; }
+    .kv-badge.kv4 { background:#fdf2f8; color:#9d174d; }
+    .kv-badge.kv5 { background:var(--red-light); color:#B01040; }
+    .kv-badge.kv6 { background:#f0fdfa; color:#0f766e; }
+    .kv-badge.kv7 { background:#f5f3ff; color:#6d28d9; }
+    .cn-code { display:inline-block; background:var(--gray-light); color:var(--gray); font-size:0.76rem; font-weight:600; padding:2px 7px; border-radius:5px; font-family:monospace; }
+    .staff-name { display:flex; align-items:center; gap:7px; font-weight:500; }
+    .staff-name i { color:var(--blue-mid); }
+    .staff-name.leader i { color:var(--gold); }
+    .staff-contact-btn { width:28px; height:28px; border-radius:7px; background:var(--blue-pale); border:1px solid #bfdbfe; color:var(--blue-dark); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:0.82rem; transition:var(--transition); }
+    .staff-contact-btn:hover { background:var(--blue-dark); color:white; }
+
+    /* CTA BANNER */
+    .cta-banner { background:linear-gradient(135deg,var(--red) 0%,#9e0c24 100%); padding:44px 40px; text-align:center; }
+    .cta-banner h2 { font-size:1.5rem; font-weight:800; color:white; margin-bottom:10px; }
+    .cta-banner p { color:rgba(255,255,255,0.8); margin-bottom:24px; font-size:0.92rem; }
+    .cta-buttons { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+    .btn-primary { background:white; color:var(--red); font-family:inherit; font-size:0.88rem; font-weight:700; padding:12px 26px; border-radius:10px; border:none; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:var(--transition); }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 4px 16px rgba(0,0,0,0.2); }
+    .btn-outline-white { background:transparent; color:white; font-family:inherit; font-size:0.88rem; font-weight:600; padding:11px 26px; border-radius:10px; border:2px solid rgba(255,255,255,0.5); cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:var(--transition); }
+    .btn-outline-white:hover { border-color:white; background:rgba(255,255,255,0.1); }
+
+    /* FOOTER */
+    footer { background:var(--blue-dark); color:rgba(255,255,255,0.7); padding:28px 40px; text-align:center; }
+    footer strong { color:white; }
+    footer p { font-size:0.8rem; margin-top:4px; }
+
+    /* ADMIN MODAL */
+    .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center; padding:24px; opacity:0; pointer-events:none; transition:opacity 0.25s; }
+    .modal-overlay.show { opacity:1; pointer-events:all; }
+    .modal { background:white; border-radius:20px; padding:32px; width:100%; max-width:400px; box-shadow:0 20px 60px rgba(0,0,0,0.2); transform:scale(0.95); transition:transform 0.25s; }
+    .modal-overlay.show .modal { transform:scale(1); }
+    .modal h3 { font-size:1.15rem; font-weight:700; color:var(--blue-dark); margin-bottom:5px; }
+    .modal p { font-size:0.83rem; color:var(--gray); margin-bottom:22px; }
+    .modal input { width:100%; padding:11px 15px; border:2px solid var(--border); border-radius:10px; font-family:inherit; font-size:0.88rem; outline:none; transition:border-color 0.2s; margin-bottom:5px; }
+    .modal input:focus { border-color:var(--red); }
+    .modal-error { font-size:0.78rem; color:#dc2626; margin-bottom:12px; display:none; }
+    .modal-btns { display:flex; gap:10px; margin-top:14px; }
+    .btn-cancel { flex:1; padding:10px; border:1px solid var(--border); border-radius:10px; background:white; font-family:inherit; font-size:0.85rem; cursor:pointer; color:var(--gray); }
+    .btn-login { flex:2; padding:10px; background:var(--red); color:white; border:none; border-radius:10px; font-family:inherit; font-size:0.85rem; font-weight:600; cursor:pointer; transition:var(--transition); }
+    .btn-login:hover { background:var(--red-dark); }
+    .admin-bar { position:fixed; bottom:22px; left:50%; transform:translateX(-50%); background:var(--blue-dark); color:white; padding:11px 22px; border-radius:100px; font-size:0.8rem; display:flex; align-items:center; gap:14px; z-index:1500; box-shadow:0 8px 32px rgba(0,0,0,0.25); opacity:0; pointer-events:none; transition:opacity 0.3s; white-space:nowrap; }
+    .admin-bar.show { opacity:1; pointer-events:all; }
+    .admin-bar i { color:var(--gold); }
+    .btn-save-admin { background:#16a34a; color:white; border:none; padding:6px 16px; border-radius:100px; font-family:inherit; font-size:0.78rem; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:5px; }
+    .btn-logout-admin { background:rgba(255,255,255,0.1); color:white; border:none; padding:6px 13px; border-radius:100px; font-family:inherit; font-size:0.78rem; cursor:pointer; }
+    [contenteditable="true"] { outline:2px dashed var(--gold); border-radius:4px; padding:2px 4px; cursor:text; }
+    [contenteditable="true"]:focus { outline:2px solid var(--red); background:#fffbeb; }
+    .toast { position:fixed; top:78px; right:22px; background:#16a34a; color:white; padding:11px 18px; border-radius:12px; font-size:0.82rem; font-weight:600; display:flex; align-items:center; gap:8px; z-index:3000; transform:translateX(120%); transition:transform 0.3s; box-shadow:var(--shadow-lg); }
+    .toast.show { transform:translateX(0); }
+
+    /* HOME MINDMAP CARDS */
+    .home-cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:14px; padding:0 40px 48px; }
+    .home-card { background:var(--white); border-radius:var(--radius-lg); padding:22px; border:1px solid var(--border); box-shadow:var(--shadow); cursor:pointer; transition:var(--transition); }
+    .home-card:hover { box-shadow:var(--shadow-lg); transform:translateY(-3px); }
+    .home-card .hc-icon { width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.2rem; margin-bottom:12px; }
+    /* Mobile mindmap card rows */
+    @media (max-width:480px){
+      .home-card { display:flex; align-items:flex-start; gap:12px; }
+      .home-card .hc-icon { margin-bottom:0; flex-shrink:0; width:38px; height:38px; font-size:1rem; }
+    }
+    .home-card h3 { font-size:0.92rem; font-weight:700; color:var(--blue-dark); margin-bottom:5px; }
+    .home-card p { font-size:0.78rem; color:var(--gray); line-height:1.5; }
+    .home-section-title { font-size:0.65rem; font-weight:800; text-transform:uppercase; letter-spacing:0.8px; color:var(--gray); padding:0 40px; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+    .home-section-title::after { content:''; flex:1; height:1px; background:var(--border); }
+
+    /* Y3 STATUS FLOW */
+    .status-flow-wrap { overflow-x:auto; }
+    .status-flow { display:flex; align-items:flex-start; gap:4px; flex-wrap:nowrap; min-width:max-content; }
+    .status-node { text-align:center; min-width:68px; }
+    .status-label { border-radius:8px; padding:6px 10px; font-size:0.7rem; font-weight:700; }
+    .status-owner { font-size:0.58rem; color:rgba(255,255,255,0.55); margin-top:4px; }
+    .status-arrow { color:var(--blue-light); padding:7px 2px; font-size:0.88rem; margin-top:0; }
+
+    /* Y3 SUB-NAV */
+    .y3-subnav { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:28px; }
+    .y3-nav-btn { padding:7px 14px; border:1.5px solid var(--border); background:white; border-radius:10px; font-family:inherit; font-size:0.8rem; font-weight:600; color:#374151; cursor:pointer; transition:var(--transition); display:flex; align-items:center; gap:6px; }
+    .y3-nav-btn:hover { border-color:var(--blue-mid); color:var(--blue-dark); background:var(--blue-pale); }
+    .y3-nav-btn.active { border-color:var(--blue-dark); color:var(--blue-dark); background:var(--blue-pale); }
+    .y3-panel { display:none; }
+    .y3-panel.active { display:block; }
+
+    /* ===== HAMBURGER BUTTON ===== */
+    .hamburger-btn {
+      display: none; background: none; border: none; cursor: pointer;
+      padding: 9px; border-radius: 9px; color: var(--blue-dark);
+      font-size: 1.15rem; transition: background 0.2s; flex-shrink:0;
+      align-items:center; justify-content:center;
+    }
+    .hamburger-btn:hover { background: var(--blue-pale); }
+    /* ===== SIDEBAR BACKDROP ===== */
+    .sidebar-backdrop {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45); z-index: 998;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .sidebar-backdrop.visible { display: block; }
+    .sidebar-backdrop.show { opacity: 1; }
+    /* ===== MOBILE TOPBAR ===== */
+    @media (max-width:480px) {
+      .topbar { font-size:0.68rem; padding:5px 12px; line-height:1.4; }
+    }
+    /* ===== TABLET + MOBILE (≤900px) ===== */
+    @media (max-width:900px) {
+      /* --- Navbar --- */
+      .hamburger-btn { display: flex; }
+      .navbar-inner { padding: 0 14px; }
+      .logo-text span { display:none; }
+      /* --- Sidebar: slide-over drawer --- */
+      .sidebar {
+        display: flex !important;
+        position: fixed; left:0; top:64px;
+        height: calc(100vh - 64px); width: 280px;
+        z-index: 999; transform: translateX(-100%);
+        transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+        box-shadow: 6px 0 28px rgba(0,0,0,0.18);
+      }
+      .sidebar.open { transform: translateX(0); }
+      /* --- Layout --- */
+      .app-layout { display: block; }
+      .content-panel { width: 100%; min-width: 0; }
+      /* --- Section padding --- */
+      .content-panel .section { padding: 24px 16px; }
+      .content-panel .hero { padding: 28px 16px 36px; }
+      .home-cards { padding: 0 16px 32px; grid-template-columns: repeat(auto-fill,minmax(160px,1fr)); gap:12px; }
+      .home-section-title { padding: 0 16px; }
+      .section-divider { margin: 0 16px; }
+      .cta-banner { padding: 32px 16px; }
+      .cta-buttons { flex-direction:column; align-items:stretch; }
+      .cta-buttons .btn-primary, .cta-buttons .btn-outline-white { justify-content:center; }
+      footer { padding: 20px 16px; }
+      /* --- Cards --- */
+      .cards-2, .cards-3 { grid-template-columns: 1fr; }
+      /* --- Hero --- */
+      .hero h1 { font-size: clamp(1.35rem,5vw,2rem); }
+      .hero-desc { font-size: 0.9rem; }
+      .hero-stats { gap: 14px; flex-wrap: wrap; }
+      .hero-badge { font-size: 0.72rem; padding:5px 12px; }
+      /* --- Solution header --- */
+      .solution-header { flex-direction: column; padding: 20px 22px; gap:14px; }
+      .solution-header-icon { width:48px; height:48px; font-size:1.3rem; }
+      /* --- Section header --- */
+      .section-header { gap: 12px; }
+      .section-title h2 { font-size: 1.25rem; }
+      /* --- Mini header --- */
+      .mini-header h3 { font-size: 1rem; }
+      /* --- Step flow --- */
+      .step-flow { flex-direction: column; align-items: center; gap:6px; }
+      .step-connector { transform: rotate(90deg); margin: -4px 0; font-size:1rem; }
+      .step-box { min-width: 220px; width: 100%; max-width: 320px; }
+      /* --- Tables --- */
+      .policy-table, .staff-table { font-size: 0.76rem; }
+      .policy-table th, .policy-table td { padding: 10px 12px; }
+      .staff-table th, .staff-table td { padding: 10px 10px; }
+      .staff-table-wrap, .doc-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: var(--radius-lg); }
+      .policy-table { overflow-x: auto; display: block; -webkit-overflow-scrolling: touch; }
+      /* --- Y3 subnav --- */
+      .y3-subnav { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 6px; -webkit-overflow-scrolling: touch; scrollbar-width: none; gap: 6px; }
+      .y3-subnav::-webkit-scrollbar { display: none; }
+      .y3-nav-btn { white-space: nowrap; flex-shrink: 0; }
+      /* --- Staff toolbar --- */
+      .staff-toolbar { flex-direction: column; align-items: stretch; }
+      .staff-search-wrap { min-width: unset; width: 100%; }
+      .staff-filter-wrap select { width: 100%; }
+      /* --- Status flow scroll --- */
+      .status-flow-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      /* --- Info boxes --- */
+      .info-box { flex-direction: row; }
+      /* --- Admin bar --- */
+      .admin-bar {
+        width: calc(100% - 32px); left: 16px; right: 16px;
+        transform: none; flex-wrap: wrap; gap: 8px;
+        border-radius: 16px; bottom: 84px; padding: 10px 18px;
+      }
+      /* --- Toast --- */
+      .toast { right: 12px; left: 12px; top: auto; bottom: 84px; }
+      /* --- Chatbot --- */
+      .chat-window { width: calc(100vw - 16px); right: 8px; bottom: 84px; max-height: calc(100vh - 110px); }
+      .chat-bubble { right: 16px; bottom: 20px; width: 54px; height: 54px; font-size: 1.15rem; }
+      .chat-bubble { bottom: calc(20px + env(safe-area-inset-bottom)); }
+      .chat-window { bottom: calc(84px + env(safe-area-inset-bottom)); }
+      .chat-messages { max-height: calc(100vh - 310px); min-height: 180px; }
+      .admin-qa-wrap { max-height: calc(100vh - 400px); }
+      /* --- Modal --- */
+      .modal { padding: 24px 20px; }
+    }
+    /* ===== PHONE ONLY (≤480px) ===== */
+    @media (max-width:480px) {
+      .navbar-inner { height: 56px; }
+      .sidebar { top: 56px; height: calc(100vh - 56px); }
+      .logo-icon { width: 38px; height: 38px; font-size: 0.7rem; }
+      .hero h1 { font-size: 1.35rem; line-height:1.25; }
+      .hero-stats { flex-direction: column; gap: 10px; }
+      .hero-stat-icon { width: 34px; height: 34px; font-size: 0.88rem; }
+      .section-num { width: 36px; height: 36px; font-size: 0.95rem; }
+      .card { padding: 16px; }
+      .card h3 { font-size: 0.92rem; }
+      .card p, .card li { font-size: 0.83rem; }
+      .home-card { padding: 14px; }
+      .home-card h3 { font-size: 0.85rem; }
+      .cta-banner h2 { font-size: 1.2rem; }
+      .cta-banner p { font-size: 0.85rem; }
+      .staff-table th:nth-child(6), .staff-table td:nth-child(6) { display: none; }
+      .btn-admin span { display: none; }
+      .connect-badge { font-size: 0.68rem; }
+      .customer-card-header h3 { font-size: 0.88rem; }
+      .customer-card-header .icon { width: 40px; height: 40px; font-size: 1.05rem; }
+      .sidebar-group-header { padding: 10px 16px 6px; }
+      .sidebar-item { padding: 10px 16px 10px 28px; }
+      .chat-bubble { right: 12px; bottom: 14px; }
+    }
+    /* ===== TOUCH TARGETS ===== */
+    @media (hover:none) and (pointer:coarse) {
+      .sidebar-item { min-height: 44px; }
+      .qr-btn { padding: 9px 14px; min-height: 38px; }
+      .chat-send-btn { width: 44px; height: 44px; }
+      .faq-question { padding: 16px 18px; min-height: 52px; }
+      .y3-nav-btn { padding: 9px 16px; min-height: 40px; }
+      .doc-link { padding: 8px 14px; }
+      .btn-primary, .btn-outline-white { padding: 14px 24px; }
+      .sidebar-group-header { min-height: 44px; }
+    }
+
+    /* Show sidebar close btn on mobile */
+    @media (max-width:900px){ #sidebarCloseBtn { display:flex !important; } }
+  </style>
+</head>
+<body>
+<!-- TOPBAR -->
+<div class="topbar"><i class="fas fa-building-columns"></i>&nbsp; Ngân hàng TMCP Công Thương Việt Nam (VietinBank) &nbsp;|&nbsp; Tài liệu nội bộ dành cho cán bộ RM / QHKH Doanh nghiệp VVN &nbsp;|&nbsp; Không phát tán ra ngoài</div>
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-inner">
+    <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleSidebar()" aria-label="Menu">
+      <i class="fas fa-bars" id="hamburgerIcon"></i>
+    </button>
+    <div class="logo" onclick="showPanel('home')">
+      <div class="logo-icon"><span style="font-size:0.8rem;line-height:1.1">SME<br/>ONE</span></div>
+      <div class="logo-text"><strong>SME ONE</strong><span>Bộ Sản phẩm Dịch vụ KHDN Vừa &amp; Nhỏ</span></div>
+    </div>
+    <div class="nav-right">
+      <span style="font-size:0.75rem;color:var(--gray);display:none" id="adminLabel"><i class="fas fa-circle" style="color:#16a34a;font-size:0.5rem"></i> Chế độ Admin</span>
+      <button class="btn-admin" id="adminBtn" onclick="openAdminModal()"><i class="fas fa-lock"></i> <span class="admin-btn-text">Admin</span></button>
+    </div>
+  </div>
+</nav>
+<!-- LAYOUT -->
+<!-- Mobile sidebar backdrop -->
+<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeSidebar()"></div>
+<div class="app-layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo" style="padding:10px 16px 8px;display:flex;align-items:center;justify-content:space-between;">
+      <span class="badge"><i class="fas fa-shield-halved"></i> Tài liệu nội bộ</span>
+      <button onclick="closeSidebar()" style="display:none;background:none;border:none;color:var(--gray);font-size:1rem;cursor:pointer;padding:4px;border-radius:6px;" id="sidebarCloseBtn"><i class="fas fa-times"></i></button>
+    </div>
+    <nav class="sidebar-nav">
+      <!-- HOME -->
+      <div class="sidebar-item sidebar-item-home active" id="nav-home" onclick="showPanel('home')">
+        <i class="fas fa-house"></i><span>Trang chủ — Tổng quan</span>
+      </div>
+      <!-- TIN DUNG -->
+      <div class="sidebar-group open" id="grp-tindung">
+        <div class="sidebar-group-header" onclick="toggleGroup('tindung')">
+          <div class="sidebar-group-icon red"><i class="fas fa-hand-holding-dollar"></i></div>
+          <span class="sidebar-group-label">Tín dụng</span>
+          <i class="fas fa-chevron-right sidebar-chevron"></i>
+        </div>
+        <div class="sidebar-children">
+          <div class="sidebar-item" id="nav-td-spdv" onclick="showPanel('td-spdv')"><i class="fas fa-cubes"></i><span>Sản phẩm Dịch vụ</span></div>
+          <div class="sidebar-item" id="nav-td-cs" onclick="showPanel('td-cs')"><i class="fas fa-file-contract"></i><span>Chính sách</span></div>
+        </div>
+      </div>
+      <!-- NGUON VON -->
+      <div class="sidebar-group open" id="grp-nguonvon">
+        <div class="sidebar-group-header" onclick="toggleGroup('nguonvon')">
+          <div class="sidebar-group-icon blue"><i class="fas fa-coins"></i></div>
+          <span class="sidebar-group-label">Nguồn vốn</span>
+          <i class="fas fa-chevron-right sidebar-chevron"></i>
+        </div>
+        <div class="sidebar-children">
+          <div class="sidebar-item" id="nav-y3" onclick="showPanel('y3')"><i class="fas fa-rocket"></i><span>Y3 — Thanh toán &amp; Quản lý Dòng tiền</span></div>
+          <div class="sidebar-item" id="nav-connect34" onclick="showPanel('connect34')"><i class="fas fa-link"></i><span>Connect 34</span></div>
+          <div class="sidebar-item" id="nav-nv-cs" onclick="showPanel('nv-cs')"><i class="fas fa-file-contract"></i><span>Chính sách</span></div>
+        </div>
+      </div>
+      <!-- THU NGOAI LAI -->
+      <div class="sidebar-group open" id="grp-thungoailai">
+        <div class="sidebar-group-header" onclick="toggleGroup('thungoailai')">
+          <div class="sidebar-group-icon green"><i class="fas fa-chart-bar"></i></div>
+          <span class="sidebar-group-label">Thu ngoài lãi</span>
+          <i class="fas fa-chevron-right sidebar-chevron"></i>
+        </div>
+        <div class="sidebar-children">
+          <div class="sidebar-item" id="nav-tnl-spdv" onclick="showPanel('tnl-spdv')"><i class="fas fa-cubes"></i><span>Sản phẩm Dịch vụ</span></div>
+          <div class="sidebar-item" id="nav-tnl-cs" onclick="showPanel('tnl-cs')"><i class="fas fa-file-contract"></i><span>Chính sách</span></div>
+        </div>
+      </div>
+    </nav>
+    <div class="sidebar-footer"><i class="fas fa-building-columns" style="color:var(--red);margin-right:4px"></i> VietinBank · Ban KHDN VVN<br/>Cập nhật: 05/2026 · v1.0</div>
+  </aside>
+  <!-- CONTENT -->
+  <main class="content-panel">
+    <!-- ===== PANEL: HOME ===== -->
+    <div class="panel active" id="panel-home">
+      <section class="hero">
+        <div class="hero-inner">
+          <div class="hero-badge"><i class="fas fa-star"></i> VietinBank · Ban KHDN VVN · Tài liệu nội bộ</div>
+          <h1 id="heroTitle">SME <span class="accent">ONE</span><br/>Bộ Sản phẩm Dịch vụ<br/>Khách hàng Doanh nghiệp Vừa &amp; Nhỏ</h1>
+          <p class="hero-desc" id="heroDesc">Cổng thông tin tổng quan dành cho cán bộ Quan hệ Khách hàng — Nắm vững toàn bộ bộ sản phẩm dịch vụ Tín dụng, Nguồn vốn và Thu ngoài lãi, tiếp cận đúng phân khúc và đẩy mạnh doanh số theo định hướng Trụ sở chính VietinBank.</p>
+          <div class="hero-stats">
+            <div class="hero-stat"><div class="hero-stat-icon"><i class="fas fa-hand-holding-dollar" style="color:var(--gold)"></i></div><div class="hero-stat-text"><strong>Tín dụng</strong><span>Vay VLĐ, TDH, Bảo lãnh</span></div></div>
+            <div class="hero-stat"><div class="hero-stat-icon"><i class="fas fa-coins" style="color:var(--gold)"></i></div><div class="hero-stat-text"><strong>Nguồn vốn</strong><span>Y3, Connect 34, Tiền gửi</span></div></div>
+            <div class="hero-stat"><div class="hero-stat-icon"><i class="fas fa-chart-bar" style="color:var(--gold)"></i></div><div class="hero-stat-text"><strong>Thu ngoài lãi</strong><span>TTQT, KDNT, Bảo hiểm, IB</span></div></div>
+          </div>
+        </div>
+      </section>
+      <!-- TỔNG QUAN 3 TRỤ CỘT -->
+      <div style="padding:40px 40px 8px">
+        <div style="background:white;border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;box-shadow:var(--shadow)">
+          <div style="text-align:center;margin-bottom:28px">
+            <div style="display:inline-flex;align-items:center;gap:10px;background:var(--blue-pale);border-radius:100px;padding:8px 20px;margin-bottom:14px">
+              <i class="fas fa-sitemap" style="color:var(--blue-dark)"></i>
+              <span style="font-size:0.82rem;font-weight:700;color:var(--blue-dark);letter-spacing:0.3px">SƠ ĐỒ SẢN PHẨM — SME ONE</span>
+            </div>
+            <div style="font-size:1.05rem;font-weight:700;color:var(--navy)">3 Trụ cột Sản phẩm Dịch vụ KHDN VVN</div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:16px">
+            <!-- TIN DUNG -->
+            <div style="background:linear-gradient(135deg,#fff5f7,#fde8ef);border:2px solid #fecdd3;border-radius:16px;padding:22px;cursor:pointer" onclick="showPanel('td-spdv')" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'" style="transition:all 0.25s">
+              <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+                <div style="width:42px;height:42px;background:linear-gradient(135deg,var(--red),var(--red-dark));border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fas fa-hand-holding-dollar" style="color:white;font-size:1.1rem"></i></div>
+                <div><div style="font-size:1rem;font-weight:800;color:var(--red)">TÍN DỤNG</div><div style="font-size:0.72rem;color:#9f3545">Credit Products</div></div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:7px">
+                <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:white;border-radius:9px;border:1px solid #fecdd3;cursor:pointer" onclick="event.stopPropagation();showPanel('td-spdv')">
+                  <i class="fas fa-cubes" style="color:var(--red);font-size:0.85rem;width:16px"></i>
+                  <span style="font-size:0.83rem;font-weight:600;color:#374151">Sản phẩm Dịch vụ</span>
+                  <i class="fas fa-arrow-right" style="color:var(--red);font-size:0.65rem;margin-left:auto"></i>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:white;border-radius:9px;border:1px solid #fecdd3;cursor:pointer" onclick="event.stopPropagation();showPanel('td-cs')">
+                  <i class="fas fa-file-contract" style="color:var(--red);font-size:0.85rem;width:16px"></i>
+                  <span style="font-size:0.83rem;font-weight:600;color:#374151">Chính sách</span>
+                  <i class="fas fa-arrow-right" style="color:var(--red);font-size:0.65rem;margin-left:auto"></i>
+                </div>
+              </div>
+            </div>
+            <!-- NGUON VON -->
+            <div style="background:linear-gradient(135deg,#f0f7ff,#e6f4fb);border:2px solid #bfdbfe;border-radius:16px;padding:22px;cursor:pointer" onclick="showPanel('y3')">
+              <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+                <div style="width:42px;height:42px;background:linear-gradient(135deg,var(--blue-dark),var(--blue-mid));border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fas fa-coins" style="color:white;font-size:1.1rem"></i></div>
+                <div><div style="font-size:1rem;font-weight:800;color:var(--blue-dark)">NGUỒN VỐN</div><div style="font-size:0.72rem;color:#1e6fa0">Capital &amp; Deposits</div></div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:7px">
+                <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:white;border-radius:9px;border:1px solid #bfdbfe;cursor:pointer" onclick="event.stopPropagation();showPanel('y3')">
+                  <i class="fas fa-rocket" style="color:var(--blue-dark);font-size:0.85rem;width:16px"></i>
+                  <span style="font-size:0.83rem;font-weight:600;color:#374151">Y3 — Thanh toán &amp; Quản lý Dòng tiền</span>
+                  <i class="fas fa-arrow-right" style="color:var(--blue-dark);font-size:0.65rem;margin-left:auto"></i>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:white;border-radius:9px;border:1px solid #bfdbfe;cursor:pointer" onclick="event.stopPropagation();showPanel('connect34')">
+                  <i class="fas fa-link" style="color:var(--blue-dark);font-size:0.85rem;width:16px"></i>
+                  <span style="font-size:0.83rem;font-weight:600;color:#374151">Connect 34</span>
+                  <i class="fas fa-arrow-right" style="color:var(--blue-dark);font-size:0.65rem;margin-left:auto"></i>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:white;border-radius:9px;border:1px solid #bfdbfe;cursor:pointer" onclick="event.stopPropagation();showPanel('nv-cs')">
+                  <i class="fas fa-file-contract" style="color:var(--blue-dark);font-size:0.85rem;width:16px"></i>
+                  <span style="font-size:0.83rem;font-weight:600;color:#374151">Chính sách</span>
+                  <i class="fas fa-arrow-right" style="color:var(--blue-dark);font-size:0.65rem;margin-left:auto"></i>
+                </div>
+              </div>
+            </div>
+            <!-- THU NGOAI LAI -->
+            <div style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:2px solid #bbf7d0;border-radius:16px;padding:22px;cursor:pointer" onclick="showPanel('tnl-spdv')">
+              <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+                <div style="width:42px;height:42px;background:linear-gradient(135deg,#16a34a,#15803d);border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fas fa-chart-bar" style="color:white;font-size:1.1rem"></i></div>
+                <div><div style="font-size:1rem;font-weight:800;color:#15803d">THU NGOÀI LÃI</div><div style="font-size:0.72rem;color:#166534">Non-Interest Income</div></div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:7px">
+                <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:white;border-radius:9px;border:1px solid #bbf7d0;cursor:pointer" onclick="event.stopPropagation();showPanel('tnl-spdv')">
+                  <i class="fas fa-cubes" style="color:#15803d;font-size:0.85rem;width:16px"></i>
+                  <span style="font-size:0.83rem;font-weight:600;color:#374151">Sản phẩm Dịch vụ</span>
+                  <i class="fas fa-arrow-right" style="color:#15803d;font-size:0.65rem;margin-left:auto"></i>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:white;border-radius:9px;border:1px solid #bbf7d0;cursor:pointer" onclick="event.stopPropagation();showPanel('tnl-cs')">
+                  <i class="fas fa-file-contract" style="color:#15803d;font-size:0.85rem;width:16px"></i>
+                  <span style="font-size:0.83rem;font-weight:600;color:#374151">Chính sách</span>
+                  <i class="fas fa-arrow-right" style="color:#15803d;font-size:0.65rem;margin-left:auto"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- THONG DIEP -->
+      <div style="padding:28px 40px 0">
+        <div style="background:linear-gradient(135deg,var(--blue-dark) 0%,#004a7c 100%);border-radius:var(--radius-lg);padding:28px 32px;color:white;display:flex;align-items:flex-start;gap:20px">
+          <div style="width:52px;height:52px;background:rgba(255,255,255,0.12);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0"><i class="fas fa-bullseye"></i></div>
+          <div>
+            <div style="font-size:1rem;font-weight:700;margin-bottom:6px" id="homeMsg1">Mục tiêu của cán bộ RM KHDN VVN</div>
+            <p style="font-size:0.87rem;opacity:0.85;max-width:720px" id="homeMsg2">Nắm vững toàn bộ hệ sinh thái sản phẩm dịch vụ VietinBank, chủ động tiếp cận và tư vấn toàn diện cho khách hàng trong danh mục quản lý — từ tín dụng, huy động vốn đến các dịch vụ thanh toán, thu ngoài lãi — nhằm gia tăng giá trị mối quan hệ và đóng góp vào tăng trưởng bền vững của Chi nhánh.</p>
+          </div>
+        </div>
+      </div>
+      <div style="height:48px"></div>
+    </div>
+    <!-- ===== PANEL: TÍN DỤNG - SẢN PHẨM ===== -->
+    <div class="panel" id="panel-td-spdv">
+      <section class="hero" style="padding:36px 40px 44px">
+        <div class="hero-inner">
+          <div class="hero-badge"><i class="fas fa-hand-holding-dollar"></i> Nhóm 1 — Tín dụng</div>
+          <h1>Sản phẩm <span class="accent">Tín dụng</span></h1>
+          <p class="hero-desc" id="td-spdv-desc">Danh mục đầy đủ các sản phẩm cho vay, bảo lãnh và tài trợ thương mại dành cho Khách hàng Doanh nghiệp Vừa &amp; Nhỏ tại VietinBank.</p>
+        </div>
+      </section>
+      <section class="section">
+        <div class="solution-header red">
+          <div class="solution-header-icon"><i class="fas fa-hand-holding-dollar"></i></div>
+          <div><h3 id="td-main-title">Định hướng tín dụng SME</h3><p id="td-main-desc">RM ưu tiên tư vấn gói tín dụng phù hợp với chu kỳ kinh doanh, dòng tiền và tài sản bảo đảm của từng khách hàng. Kết hợp cross-sell sản phẩm nguồn vốn và thu ngoài lãi trong cùng giao dịch.</p></div>
+        </div>
+        <!-- CHO VAY NGAN HAN -->
+        <div class="mini-header" style="margin-top:36px">
+          <div class="mini-header-icon" style="background:var(--red-light)"><i class="fas fa-calendar-day" style="color:var(--red)"></i></div>
+          <div><h3>A. Sản phẩm Cho vay Ngắn hạn</h3><p>Bổ sung vốn lưu động, tài trợ chu kỳ kinh doanh</p></div>
+        </div>
+        <div class="cards cards-2">
+          <div class="card">
+            <div class="card-icon red"><i class="fas fa-rotate"></i></div>
+            <div class="card-tag">Ngắn hạn · VLĐ</div>
+            <h3>Cho vay bổ sung Vốn lưu động</h3>
+            <p>Đáp ứng nhu cầu mua nguyên vật liệu, hàng hóa, trả lương, thanh toán nhà cung cấp. Linh hoạt rút và trả trong hạn mức được cấp.</p>
+            <ul><li>Hạn mức tuần hoàn hoặc từng lần</li><li>Kỳ hạn: 3 — 12 tháng</li><li>Lãi suất cạnh tranh, phí thấp</li><li>TSĐB: khoản phải thu, hàng tồn kho, BĐS</li></ul>
+          </div>
+          <div class="card">
+            <div class="card-icon red"><i class="fas fa-credit-card"></i></div>
+            <div class="card-tag">Ngắn hạn · Thấu chi</div>
+            <h3>Thấu chi Tài khoản Thanh toán</h3>
+            <p>Hỗ trợ chi trả tức thời khi tài khoản không đủ số dư. Phù hợp doanh nghiệp có dòng tiền biến động trong ngắn hạn.</p>
+            <ul><li>Hạn mức: tối đa theo chính sách từng thời kỳ</li><li>Lãi tính trên số dư thấu chi thực tế</li><li>Không cần rút — tự động kích hoạt khi chi vượt</li><li>Kết hợp với tài khoản VietinBank eFAST</li></ul>
+          </div>
+          <div class="card">
+            <div class="card-icon red"><i class="fas fa-file-invoice-dollar"></i></div>
+            <div class="card-tag">Tài trợ thương mại · XNK</div>
+            <h3>Tài trợ Nhập khẩu (L/C, TTR, D/P, D/A)</h3>
+            <p>Tài trợ cho doanh nghiệp nhập khẩu hàng hóa, nguyên vật liệu. Mở L/C, thanh toán TTR, chiết khấu bộ chứng từ hàng xuất.</p>
+            <ul><li>L/C nhập khẩu (Sight, Usance, UPAS)</li><li>Thanh toán TTR, nhờ thu D/P, D/A</li><li>Tài trợ trả chậm (Deferred Payment)</li><li>Bảo lãnh thanh toán trong nước</li></ul>
+          </div>
+          <div class="card">
+            <div class="card-icon red"><i class="fas fa-ship"></i></div>
+            <div class="card-tag">Tài trợ thương mại · Xuất khẩu</div>
+            <h3>Tài trợ Xuất khẩu &amp; Chiết khấu Chứng từ</h3>
+            <p>Hỗ trợ vốn trước và sau khi giao hàng cho doanh nghiệp xuất khẩu, tối ưu dòng tiền từ các đơn hàng quốc tế.</p>
+            <ul><li>Cho vay trước xuất khẩu (Pre-shipment)</li><li>Chiết khấu chứng từ xuất khẩu (L/C, D/P)</li><li>Bao thanh toán xuất khẩu (Factoring)</li><li>Bảo lãnh thực hiện hợp đồng xuất khẩu</li></ul>
+          </div>
+        </div>
+        <!-- CHO VAY TRUNG DAI HAN -->
+        <div class="mini-header" style="margin-top:40px">
+          <div class="mini-header-icon" style="background:var(--red-light)"><i class="fas fa-building" style="color:var(--red)"></i></div>
+          <div><h3>B. Sản phẩm Cho vay Trung &amp; Dài hạn</h3><p>Đầu tư tài sản cố định, mở rộng sản xuất kinh doanh</p></div>
+        </div>
+        <div class="cards cards-2">
+          <div class="card">
+            <div class="card-icon red"><i class="fas fa-industry"></i></div>
+            <div class="card-tag">Trung dài hạn · TSCĐ</div>
+            <h3>Cho vay Đầu tư Tài sản Cố định</h3>
+            <p>Tài trợ mua máy móc thiết bị, phương tiện vận tải, xây dựng nhà xưởng, văn phòng, mở rộng năng lực sản xuất.</p>
+            <ul><li>Kỳ hạn: 3 — 10 năm tùy dự án</li><li>Tỷ lệ tài trợ: tối đa 70-85% giá trị TSCĐ</li><li>Lịch trả nợ linh hoạt theo dòng tiền dự án</li><li>TSĐB: chính tài sản hình thành từ vốn vay</li></ul>
+          </div>
+          <div class="card">
+            <div class="card-icon red"><i class="fas fa-solar-panel"></i></div>
+            <div class="card-tag">Tín dụng xanh · ESG</div>
+            <h3>Tín dụng Xanh — Green Finance</h3>
+            <p>Ưu đãi đặc biệt cho doanh nghiệp đầu tư vào các dự án thân thiện môi trường: điện mặt trời, tiết kiệm năng lượng, xử lý chất thải.</p>
+            <ul><li>Lãi suất ưu đãi hơn vay thông thường</li><li>Được hỗ trợ theo chương trình tái cấp vốn NHNN</li><li>Thủ tục đơn giản hóa cho dự án ESG có chứng nhận</li><li>Kỳ hạn dài tối đa 15 năm</li></ul>
+          </div>
+        </div>
+        <!-- BAO LANH -->
+        <div class="mini-header" style="margin-top:40px">
+          <div class="mini-header-icon" style="background:var(--red-light)"><i class="fas fa-shield-check" style="color:var(--red)"></i></div>
+          <div><h3>C. Bảo lãnh Ngân hàng</h3><p>Cam kết thanh toán thay doanh nghiệp trong các quan hệ hợp đồng</p></div>
+        </div>
+        <div class="cards cards-3">
+          <div class="card">
+            <div class="card-icon red"><i class="fas fa-gavel"></i></div>
+            <div class="card-tag">Bảo lãnh</div>
+            <h3>Bảo lãnh Dự thầu</h3>
+            <p>Đảm bảo nghĩa vụ tham dự thầu của doanh nghiệp. Phát hành nhanh, phí cạnh tranh, chấp nhận rộng tại các chủ đầu tư lớn.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon red"><i class="fas fa-handshake"></i></div>
+            <div class="card-tag">Bảo lãnh</div>
+            <h3>Bảo lãnh Thực hiện Hợp đồng</h3>
+            <p>Đảm bảo nhà thầu thực hiện đúng cam kết hợp đồng thi công, cung cấp dịch vụ, giao hàng đúng hạn.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon red"><i class="fas fa-money-check-dollar"></i></div>
+            <div class="card-tag">Bảo lãnh</div>
+            <h3>Bảo lãnh Thanh toán &amp; Tiền ứng trước</h3>
+            <p>Bảo lãnh nghĩa vụ thanh toán, hoàn trả tiền ứng trước, bảo hành công trình, sản phẩm sau bàn giao.</p>
+          </div>
+        </div>
+        <div class="info-box blue" style="margin-top:24px"><i class="fas fa-circle-info" style="flex-shrink:0;margin-top:2px"></i><p><strong>Lưu ý:</strong> Tất cả sản phẩm tín dụng tuân thủ theo Quy chế cho vay, Quy định về bảo lãnh hiện hành của VietinBank. RM tham khảo hướng dẫn nghiệp vụ trên Intranet KHDN trước khi tư vấn khách hàng.</p></div>
+      </section>
+    </div>
+
+    <!-- ===== PANEL: TÍN DỤNG - CHÍNH SÁCH ===== -->
+    <div class="panel" id="panel-td-cs">
+      <section class="hero" style="padding:36px 40px 44px">
+        <div class="hero-inner">
+          <div class="hero-badge"><i class="fas fa-file-contract"></i> Chính sách Tín dụng</div>
+          <h1>Chính sách <span class="accent">Tín dụng SME</span></h1>
+          <p class="hero-desc">Định hướng cấp tín dụng, lãi suất, điều kiện và các chương trình ưu đãi hiện hành dành cho phân khúc KHDN VVN.</p>
+        </div>
+      </section>
+      <section class="section">
+        <div class="cards cards-2" style="margin-bottom:32px">
+          <div class="card">
+            <div class="card-icon navy"><i class="fas fa-percent"></i></div>
+            <h3>Lãi suất &amp; Biên độ</h3>
+            <p>Lãi suất cho vay SME được tính theo cơ chế lãi suất thả nổi (FTP + biên độ) hoặc lãi suất cố định theo chương trình ưu đãi. RM tra cứu lãi suất hiện hành trên hệ thống nội bộ trước khi chào cho khách hàng.</p>
+            <div class="info-box blue" style="margin-top:12px;padding:10px 14px"><i class="fas fa-link" style="flex-shrink:0"></i><a href="https://intranet.vietinbank.vn" target="_blank" class="doc-link" style="margin-left:0">Tra cứu lãi suất nội bộ</a></div>
+          </div>
+          <div class="card">
+            <div class="card-icon navy"><i class="fas fa-layer-group"></i></div>
+            <h3>Phân cấp Phê duyệt Tín dụng</h3>
+            <p>Hạn mức phán quyết tín dụng phân cấp theo quy mô khoản vay và xếp hạng tín dụng nội bộ của khách hàng. Chi nhánh loại 1 có thẩm quyền phán quyết tối đa theo Quy định hiện hành của VietinBank.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon navy"><i class="fas fa-building-shield"></i></div>
+            <h3>Tài sản Bảo đảm</h3>
+            <p>Ưu tiên nhận TSĐB là BĐS (tỷ lệ cho vay 65-75%), máy móc thiết bị (50-60%), hàng tồn kho (50-60%), khoản phải thu (60-70%). Tín chấp SME áp dụng cho KH xếp hạng A, B với lịch sử giao dịch tốt.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon navy"><i class="fas fa-award"></i></div>
+            <h3>Chương trình Tín dụng Ưu đãi</h3>
+            <p>Các gói tín dụng ưu đãi lãi suất theo định hướng Chính phủ (nông nghiệp nông thôn, xuất khẩu, doanh nghiệp nhỏ...) và chương trình riêng của VietinBank từng thời kỳ.</p>
+            <div class="info-box yellow" style="margin-top:12px;padding:10px 14px"><i class="fas fa-triangle-exclamation" style="flex-shrink:0"></i><span style="font-size:0.8rem">Cập nhật gói ưu đãi định kỳ từ Ban KHDN VVN Trụ sở</span></div>
+          </div>
+        </div>
+        <div class="mini-header" style="margin-top:8px">
+          <div class="mini-header-icon" style="background:var(--blue-pale)"><i class="fas fa-clipboard-list" style="color:var(--blue-dark)"></i></div>
+          <div><h3>Tài liệu Chính sách Tín dụng</h3><p>Hướng dẫn nghiệp vụ và văn bản chính sách hiện hành</p></div>
+        </div>
+        <table class="policy-table">
+          <thead><tr><th>#</th><th>Tên tài liệu / Văn bản</th><th>Loại</th><th>Cập nhật</th><th>Truy cập</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td><strong>Quy chế Cho vay KHDN hiện hành</strong><br/><span style="font-size:0.78rem;color:var(--gray)">Quy định điều kiện, trình tự, thủ tục cấp tín dụng</span></td><td><span class="badge badge-blue">Quy chế</span></td><td>2025</td><td><a href="https://intranet.vietinbank.vn/khdn" target="_blank" class="doc-link"><i class="fas fa-external-link-alt"></i> Intranet</a></td></tr>
+            <tr><td>2</td><td><strong>Biểu lãi suất cho vay SME</strong><br/><span style="font-size:0.78rem;color:var(--gray)">Lãi suất ưu đãi theo gói và lãi suất thông thường</span></td><td><span class="badge badge-gold">Lãi suất</span></td><td>Cập nhật theo tháng</td><td><a href="https://intranet.vietinbank.vn/khdn" target="_blank" class="doc-link"><i class="fas fa-external-link-alt"></i> Intranet</a></td></tr>
+            <tr><td>3</td><td><strong>Hướng dẫn thẩm định KHDN VVN</strong><br/><span style="font-size:0.78rem;color:var(--gray)">Phân tích tài chính, dòng tiền, tài sản bảo đảm</span></td><td><span class="badge badge-blue">Nghiệp vụ</span></td><td>Q4/2024</td><td><a href="https://intranet.vietinbank.vn/khdn" target="_blank" class="doc-link"><i class="fas fa-external-link-alt"></i> Intranet</a></td></tr>
+            <tr><td>4</td><td><strong>Danh sách gói tín dụng ưu đãi</strong><br/><span style="font-size:0.78rem;color:var(--gray)">Các chương trình ưu đãi hiện hành theo từng thời kỳ</span></td><td><span class="badge badge-green">Ưu đãi</span></td><td>Cập nhật theo quý</td><td><a href="https://intranet.vietinbank.vn/khdn" target="_blank" class="doc-link"><i class="fas fa-external-link-alt"></i> Intranet</a></td></tr>
+            <tr><td>5</td><td><strong>Quy định về Bảo lãnh Ngân hàng</strong><br/><span style="font-size:0.78rem;color:var(--gray)">Điều kiện, phí, quy trình phát hành bảo lãnh</span></td><td><span class="badge badge-blue">Quy chế</span></td><td>2024</td><td><a href="https://intranet.vietinbank.vn/khdn" target="_blank" class="doc-link"><i class="fas fa-external-link-alt"></i> Intranet</a></td></tr>
+          </tbody>
+        </table>
+        <div class="info-box yellow" style="margin-top:16px"><i class="fas fa-triangle-exclamation" style="flex-shrink:0;margin-top:2px"></i><p><strong>Lưu ý:</strong> Chính sách tín dụng được cập nhật theo từng thời kỳ bởi Ban KHDN VVN và Hội đồng Tín dụng VietinBank. RM cần cập nhật các thông báo nội bộ thường xuyên để đảm bảo tư vấn đúng chính sách mới nhất.</p></div>
+      </section>
+    </div>
+    <!-- ===== PANEL: Y3 ===== -->
+    <div class="panel" id="panel-y3">
+      <section class="hero" style="padding:36px 40px 44px">
+        <div class="hero-inner">
+          <div class="hero-badge"><i class="fas fa-rocket"></i> Nguồn vốn · Sáng kiến Y3</div>
+          <h1>Sáng kiến <span class="accent">Y3</span><br/>Thanh toán &amp; Quản lý Dòng tiền</h1>
+          <p class="hero-desc" id="y3-hero-desc">Tài liệu hướng dẫn dành cho RM Chi nhánh — Nắm vững bộ sản phẩm, tiếp cận đúng phân khúc khách hàng, đẩy mạnh doanh số thanh toán và quản lý dòng tiền theo định hướng Trụ sở chính.</p>
+          <div class="hero-stats">
+            <div class="hero-stat"><div class="hero-stat-icon"><i class="fas fa-layer-group" style="color:var(--gold)"></i></div><div class="hero-stat-text"><strong id="y3-stat1">5 nhóm</strong><span>Sản phẩm thanh toán</span></div></div>
+            <div class="hero-stat"><div class="hero-stat-icon"><i class="fas fa-building" style="color:var(--gold)"></i></div><div class="hero-stat-text"><strong id="y3-stat2">3+ phân khúc</strong><span>Khách hàng mục tiêu</span></div></div>
+            <div class="hero-stat"><div class="hero-stat-icon"><i class="fas fa-chart-line" style="color:var(--gold)"></i></div><div class="hero-stat-text"><strong id="y3-stat3">Tăng trưởng CASA</strong><span>Mục tiêu cốt lõi Y3</span></div></div>
+          </div>
+        </div>
+      </section>
+      <section class="section">
+        <!-- Y3 Sub Navigation -->
+        <div class="y3-subnav">
+          <button class="y3-nav-btn active" id="y3-btn-solution" onclick="showY3('solution')"><i class="fas fa-rocket"></i> Bộ Giải pháp</button>
+          <button class="y3-nav-btn" id="y3-btn-customers" onclick="showY3('customers')"><i class="fas fa-users"></i> Khách hàng mục tiêu</button>
+          <button class="y3-nav-btn" id="y3-btn-docs" onclick="showY3('docs')"><i class="fas fa-folder-open"></i> Tài liệu</button>
+          <button class="y3-nav-btn" id="y3-btn-contact" onclick="showY3('contact')"><i class="fas fa-headset"></i> Phụ trách Chi nhánh</button>
+          <button class="y3-nav-btn" id="y3-btn-faq" onclick="showY3('faq')"><i class="fas fa-circle-question"></i> Vướng mắc thường gặp</button>
+        </div>
+
+        <!-- Y3 Panel: GIẢI PHÁP -->
+        <div class="y3-panel active" id="y3-panel-solution">
+          <div class="solution-header">
+            <div class="solution-header-icon"><i class="fas fa-bullseye"></i></div>
+            <div><h3 id="y3-s1-title">Mục tiêu cốt lõi của Y3</h3><p id="y3-s1-desc">Tăng tỷ lệ giao dịch không dùng tiền mặt, nâng cao CASA, gia tăng mối quan hệ với doanh nghiệp thông qua bộ giải pháp tích hợp thanh toán và quản lý dòng tiền. RM cần chủ động tiếp cận, tư vấn và cross-sell toàn bộ hệ sinh thái sản phẩm VietinBank cho khách hàng trong danh mục.</p></div>
+          </div>
+          <div class="cards cards-2">
+            <div class="card"><div class="card-icon blue"><i class="fas fa-sack-dollar"></i></div><div class="card-tag blue">Thu hộ — Collection</div><h3>Giải pháp Thu hộ</h3><p>Dành cho doanh nghiệp có nhu cầu thu tiền từ nhiều đơn vị con, đại lý, nhà phân phối, hoặc thu học phí/viện phí. Tự động ghi nhận nguồn tiền, giảm rủi ro sai sót, báo cáo real-time.</p><ul><li>Thu hộ đa kênh: QR, chuyển khoản định danh, tiền mặt</li><li>Phân bổ tự động về tài khoản tập trung</li><li>Đối soát tức thì, báo cáo doanh thu theo đại lý/điểm</li><li>Hỗ trợ thu viện phí, học phí, COD logistics</li></ul></div>
+            <div class="card"><div class="card-icon green"><i class="fas fa-money-bill-transfer"></i></div><div class="card-tag green">Chi hộ — Disbursement</div><h3>Giải pháp Chi hộ</h3><p>Tối ưu việc chi trả cho nhà cung cấp, nhân viên, đại lý. Tích hợp quy trình phê duyệt nội bộ, kiểm soát ngân sách, giảm thời gian xử lý thanh toán từ nhiều ngày xuống vài phút.</p><ul><li>Thanh toán batch cho 10.000+ thụ hưởng cùng lúc</li><li>Lên lịch chi trả tự động theo ngày cố định</li><li>Phê duyệt 4-mắt, kiểm soát hạn mức theo vai trò</li><li>Kết nối HRMS, ERP, phần mềm kế toán</li></ul></div>
+            <div class="card"><div class="card-icon red"><i class="fas fa-chart-pie"></i></div><div class="card-tag">Quản lý dòng tiền — CMS</div><h3>Cash Management System (CMS)</h3><p>Bộ giải pháp toàn diện giúp CFO kiểm soát dòng tiền tập đoàn: sweeping, pooling, notional pooling. Tối ưu lãi suất trên số dư nhàn rỗi, quản lý thanh khoản tức thì.</p><ul><li>Zero Balancing / Target Balancing tự động</li><li>Notional Pooling — tối ưu lãi vay nhóm công ty</li><li>Dashboard dòng tiền toàn tập đoàn real-time</li><li>Dự báo thanh khoản, cảnh báo thiếu tiền chủ động</li></ul></div>
+            <div class="card"><div class="card-icon teal"><i class="fas fa-qrcode"></i></div><div class="card-tag teal">Thanh toán bán lẻ</div><h3>POS / QR VietQR / Cổng thanh toán</h3><p>Dành cho doanh nghiệp bán lẻ, bệnh viện, trường học cần thu tiền trực tiếp từ khách hàng cá nhân. Tích hợp VietQR liên ngân hàng, POS không dây, cổng thanh toán online.</p><ul><li>VietQR tĩnh &amp; động theo từng giao dịch</li><li>POS / mPOS không dây, hỗ trợ contactless, NFC</li><li>Payment Gateway tích hợp website, app thương mại</li><li>Báo cáo doanh thu theo giờ/ngày/điểm bán tức thì</li></ul></div>
+            <div class="card"><div class="card-icon gold"><i class="fas fa-plug-circle-bolt"></i></div><div class="card-tag gold">Kết nối ERP — OpenAPI</div><h3>Kết nối ERP / Hệ thống Quản trị DN</h3><p>Kết nối hệ thống ERP, phần mềm kế toán (MISA, Fast, SAP...) của doanh nghiệp với core banking VietinBank qua API chuẩn. Tự động hoá đối soát, giảm nhập liệu thủ công.</p><ul><li>Đối soát tự động 24/7, sai lệch &lt;0.01%</li><li>Webhook nhận thông báo giao dịch tức thì</li><li>Hỗ trợ REST API chuẩn quốc tế (ISO 20022)</li><li>Đã tích hợp sẵn: MISA, Fast, SAP, Oracle</li></ul></div>
+          </div>
+          <!-- VAC + QUY TRINH -->
+          <div class="mini-header" style="margin-top:40px">
+            <div class="mini-header-icon" style="background:var(--blue-pale)"><i class="fas fa-diagram-project" style="color:var(--blue-dark)"></i></div>
+            <div><h3>Tổng quan Giải pháp Kết nối — Quy trình 5 bước</h3><p>Từ tích hợp hệ thống → thu hộ tự động → đối soát T+1</p></div>
+          </div>
+          <!-- VAC -->
+          <div style="background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue-mid) 100%);border-radius:var(--radius-lg);padding:24px 28px;margin-bottom:18px;color:white">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px"><i class="fas fa-fingerprint" style="color:var(--blue-light)"></i><h4 style="font-weight:700;font-size:0.95rem;margin:0">Cấu trúc Mã Định danh Tài khoản (VAC)</h4></div>
+            <div style="background:rgba(0,0,0,0.25);border-radius:9px;padding:12px 18px;font-family:monospace;font-size:0.88rem;margin-bottom:14px;letter-spacing:0.4px">
+              Mã định danh = <span style="color:#7ED3F7">VAC</span> + <span style="color:#fde68a">[Mã KH]</span> + <span style="color:#bbf7d0">[Mã phòng ban]</span> + <span style="color:#fca5a5">[Mã nhân viên]</span> + <span style="color:#e9d5ff">[Mã hóa đơn]</span>
+            </div>
+            <div style="background:rgba(0,0,0,0.2);border-radius:9px;padding:12px 18px;margin-bottom:14px">
+              <div style="font-size:0.72rem;color:rgba(255,255,255,0.7);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.4px">Ví dụ thực tế</div>
+              <div style="font-family:monospace;font-size:0.98rem;color:white;font-weight:700;margin-bottom:10px"><span style="color:#7ED3F7">1VTX</span>.<span style="color:#fde68a">56200018</span>.<span style="color:#bbf7d0">08</span>.<span style="color:#fca5a5">H101</span>.<span style="color:#e9d5ff">A1B2357</span></div>
+              <div style="display:flex;flex-wrap:wrap;gap:8px">
+                <span style="background:rgba(126,211,247,0.15);border:1px solid rgba(126,211,247,0.4);border-radius:7px;padding:4px 10px;font-size:0.76rem"><span style="color:#7ED3F7;font-weight:700">1VTX</span> — Mã VAC</span>
+                <span style="background:rgba(253,230,138,0.15);border:1px solid rgba(253,230,138,0.4);border-radius:7px;padding:4px 10px;font-size:0.76rem"><span style="color:#fde68a;font-weight:700">56200018</span> — Mã khách hàng</span>
+                <span style="background:rgba(187,247,208,0.15);border:1px solid rgba(187,247,208,0.4);border-radius:7px;padding:4px 10px;font-size:0.76rem"><span style="color:#bbf7d0;font-weight:700">08</span> — Phòng ban</span>
+                <span style="background:rgba(252,165,165,0.15);border:1px solid rgba(252,165,165,0.4);border-radius:7px;padding:4px 10px;font-size:0.76rem"><span style="color:#fca5a5;font-weight:700">H101</span> — Mã nhân viên</span>
+                <span style="background:rgba(233,213,255,0.15);border:1px solid rgba(233,213,255,0.4);border-radius:7px;padding:4px 10px;font-size:0.76rem"><span style="color:#e9d5ff;font-weight:700">A1B2357</span> — Mã hóa đơn</span>
+              </div>
+            </div>
+            <p style="font-size:0.8rem;color:rgba(255,255,255,0.75);margin:0"><i class="fas fa-circle-info" style="margin-right:5px"></i>KHDN tạo mã QR VietQR tương ứng từng mã định danh. End-user quét hoặc nhập từ Internet Banking bất kỳ ngân hàng.</p>
+          </div>
+          <!-- QUY TRINH 5 BUOC -->
+          <div style="background:white;border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px 28px;box-shadow:var(--shadow)">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px"><i class="fas fa-arrows-turn-right" style="color:var(--blue-mid)"></i><h4 style="font-size:0.95rem;font-weight:700;color:var(--blue-dark);margin:0">Quy trình Kết nối &amp; Thu hộ — 5 bước</h4></div>
+            <div class="step-flow">
+              <div class="step-box"><div class="step-num blue">1</div><div style="width:2px;height:12px;background:var(--blue-pale);margin:0 auto"></div><div class="step-content"><i class="fas fa-plug" style="color:var(--blue-dark);display:block;margin-bottom:4px"></i><div style="font-size:0.74rem;font-weight:700;color:var(--blue-dark);margin-bottom:3px">Tích hợp hệ thống</div><div style="font-size:0.68rem;color:var(--gray)">CNTT KHDN kết nối VietinBank qua Techspec/API</div></div></div>
+              <div class="step-connector">→</div>
+              <div class="step-box"><div class="step-num blue">2</div><div style="width:2px;height:12px;background:var(--blue-pale);margin:0 auto"></div><div class="step-content"><i class="fas fa-qrcode" style="color:var(--blue-dark);display:block;margin-bottom:4px"></i><div style="font-size:0.74rem;font-weight:700;color:var(--blue-dark);margin-bottom:3px">KHDN tạo QR</div><div style="font-size:0.68rem;color:var(--gray)">Tạo VietQR cho từng mã định danh TK</div></div></div>
+              <div class="step-connector">→</div>
+              <div class="step-box"><div class="step-num red">3</div><div style="width:2px;height:12px;background:#fee2e2;margin:0 auto"></div><div class="step-content red-bg"><i class="fas fa-mobile-screen" style="color:var(--red);display:block;margin-bottom:4px"></i><div style="font-size:0.74rem;font-weight:700;color:var(--red);margin-bottom:3px">End-user TT</div><div style="font-size:0.68rem;color:var(--gray)">Scan VietQR / nhập mã — IB bất kỳ NH</div></div></div>
+              <div class="step-connector">→</div>
+              <div class="step-box"><div class="step-num blue">4</div><div style="width:2px;height:12px;background:var(--blue-pale);margin:0 auto"></div><div class="step-content"><i class="fas fa-server" style="color:var(--blue-dark);display:block;margin-bottom:4px"></i><div style="font-size:0.74rem;font-weight:700;color:var(--blue-dark);margin-bottom:3px">VietinBank xử lý</div><div style="font-size:0.68rem;color:var(--gray)">Giao dịch xử lý, dữ liệu lưu FTP ngày T</div></div></div>
+              <div class="step-connector">→</div>
+              <div class="step-box"><div class="step-num green">5</div><div style="width:2px;height:12px;background:#dcfce7;margin:0 auto"></div><div class="step-content green-bg"><i class="fas fa-check-double" style="color:#16a34a;display:block;margin-bottom:4px"></i><div style="font-size:0.74rem;font-weight:700;color:#15803d;margin-bottom:3px">KHDN gạch nợ</div><div style="font-size:0.68rem;color:var(--gray)">VietinBank trả kết quả → KHDN tự động gạch nợ</div></div></div>
+            </div>
+          </div>
+          <!-- QUY TRINH PHOI HOP & SLA -->
+          <div class="mini-header" style="margin-top:40px">
+            <div class="mini-header-icon" style="background:var(--red-light)"><i class="fas fa-stopwatch" style="color:var(--red)"></i></div>
+            <div><h3>Quy trình Phối hợp &amp; SLA</h3><p>Luồng xử lý từ phát sinh nhu cầu → Triển khai → Go-live (áp dụng từ 01/04/2026)</p></div>
+          </div>
+          <div style="background:linear-gradient(135deg,var(--blue-dark) 0%,#003f6b 100%);border-radius:var(--radius-lg);padding:24px 28px;margin-bottom:18px;color:white;overflow-x:auto">
+            <div style="font-size:0.85rem;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px"><i class="fas fa-sitemap" style="color:var(--blue-light)"></i> Luồng trạng thái triển khai deal</div>
+            <div class="status-flow-wrap"><div class="status-flow">
+              <div class="status-node"><div class="status-label" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3)">OPEN</div><div class="status-owner">Ban SME</div></div>
+              <div class="status-arrow">→</div>
+              <div class="status-node"><div class="status-label" style="background:rgba(244,168,54,0.3);border:1px solid rgba(244,168,54,0.6);color:var(--gold)">SME APPROVAL</div><div class="status-owner">Ban SME</div></div>
+              <div class="status-arrow">→</div>
+              <div class="status-node"><div class="status-label" style="background:rgba(126,211,247,0.2);border:1px solid rgba(126,211,247,0.4);color:var(--blue-light)">TKGP REVIEW</div><div class="status-owner">Phòng TK</div></div>
+              <div class="status-arrow">→</div>
+              <div class="status-node"><div class="status-label" style="background:rgba(126,211,247,0.2);border:1px solid rgba(126,211,247,0.4);color:var(--blue-light)">TKGP APPROVAL</div><div class="status-owner">Phòng TK</div></div>
+              <div class="status-arrow">→</div>
+              <div class="status-node"><div class="status-label" style="background:rgba(187,247,208,0.2);border:1px solid rgba(187,247,208,0.4);color:#86efac">BA</div><div class="status-owner">BA + PT</div></div>
+              <div class="status-arrow">→</div>
+              <div class="status-node"><div class="status-label" style="background:rgba(187,247,208,0.2);border:1px solid rgba(187,247,208,0.4);color:#86efac">DEV</div><div class="status-owner">DEV</div></div>
+              <div class="status-arrow">→</div>
+              <div class="status-node"><div class="status-label" style="background:rgba(233,213,255,0.2);border:1px solid rgba(233,213,255,0.4);color:#d8b4fe">UAT</div><div class="status-owner">Phòng TK</div></div>
+              <div class="status-arrow">→</div>
+              <div class="status-node"><div class="status-label" style="background:rgba(233,213,255,0.2);border:1px solid rgba(233,213,255,0.4);color:#d8b4fe">ACCEPTANCE</div><div class="status-owner">Phòng TK</div></div>
+              <div class="status-arrow">→</div>
+              <div class="status-node"><div class="status-label" style="background:rgba(134,239,172,0.25);border:1px solid rgba(134,239,172,0.6);color:#4ade80">GOLIVE</div><div class="status-owner">Phòng TK</div></div>
+              <div class="status-arrow">→</div>
+              <div class="status-node"><div class="status-label" style="background:rgba(156,163,175,0.2);border:1px solid rgba(156,163,175,0.4);color:#d1d5db">CLOSE</div><div class="status-owner">Phòng TK</div></div>
+            </div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px">
+            <div style="background:white;border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px;box-shadow:var(--shadow)">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><div style="width:36px;height:36px;background:var(--gold-light);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fas fa-stopwatch" style="color:#d97706"></i></div><div><h4 style="font-size:0.9rem;font-weight:700;color:var(--blue-dark);margin:0">SLA từng giai đoạn</h4><span style="font-size:0.72rem;color:var(--gray)">Tính theo ngày làm việc</span></div></div>
+              <div style="display:flex;flex-direction:column;gap:5px">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;background:#f9fafb;border-radius:7px;border-left:3px solid var(--gold)"><span style="font-size:0.79rem">Open → SME Approval</span><span class="badge badge-gold">1 ngày</span></div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;background:#f9fafb;border-radius:7px;border-left:3px solid var(--blue-mid)"><span style="font-size:0.79rem">SME Approval → TKGP Review</span><span class="badge badge-blue">2 ngày</span></div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;background:#f9fafb;border-radius:7px;border-left:3px solid var(--blue-mid)"><span style="font-size:0.79rem">TKGP Review → TKGP Approval</span><span class="badge badge-blue">1 ngày</span></div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;background:#f9fafb;border-radius:7px;border-left:3px solid #7c3aed"><span style="font-size:0.79rem">TKGP Approval → BA (URD)</span><span class="badge badge-purple">2 ngày</span></div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;background:#f9fafb;border-radius:7px;border-left:3px solid #16a34a"><span style="font-size:0.79rem">BA → DEV (Coding)</span><span class="badge badge-green">3 ngày</span></div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;background:#f9fafb;border-radius:7px;border-left:3px solid #0d9488"><span style="font-size:0.79rem">DEV → UAT</span><span class="badge" style="background:#f0fdfa;color:#0f766e">5 ngày</span></div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;background:#f0fdf4;border-radius:7px;border-left:3px solid #16a34a"><span style="font-size:0.79rem">Acceptance → Go-live</span><span class="badge badge-green">2 ngày</span></div>
+              </div>
+            </div>
+            <div style="background:white;border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px;box-shadow:var(--shadow)">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><div style="width:36px;height:36px;background:var(--red-light);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fas fa-users-gear" style="color:var(--red)"></i></div><div><h4 style="font-size:0.9rem;font-weight:700;color:var(--blue-dark);margin:0">Phân công đầu mối</h4><span style="font-size:0.72rem;color:var(--gray)">Ai xử lý giai đoạn nào</span></div></div>
+              <div style="display:flex;flex-direction:column;gap:7px">
+                <div style="padding:9px 12px;background:var(--blue-pale);border-radius:8px;border-left:3px solid var(--blue-dark)"><div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;color:var(--blue-dark);margin-bottom:4px">Ban SME</div><div style="font-size:0.79rem;color:#374151">Tiếp nhận nhu cầu, duyệt Open → SME Approval.</div></div>
+                <div style="padding:9px 12px;background:#fef3c7;border-radius:8px;border-left:3px solid var(--gold)"><div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;color:#92400e;margin-bottom:4px">Phòng Triển khai (TKGP)</div><div style="font-size:0.79rem;color:#374151">Review kỹ thuật, phụ trách UAT, Acceptance, Go-live.</div></div>
+                <div style="padding:9px 12px;background:#f5f3ff;border-radius:8px;border-left:3px solid #7c3aed"><div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;color:#6d28d9;margin-bottom:4px">BA — Business Analyst</div><div style="font-size:0.79rem;color:#374151">Phân tích nghiệp vụ, viết URD, phối hợp Phòng Phát triển.</div></div>
+                <div style="padding:9px 12px;background:#f0fdf4;border-radius:8px;border-left:3px solid #16a34a"><div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;color:#15803d;margin-bottom:4px">DEV</div><div style="font-size:0.79rem;color:#374151">Coding theo URD → bàn giao UAT.</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="info-box blue" style="margin-top:16px"><i class="fas fa-circle-info" style="flex-shrink:0;margin-top:2px"></i><p><strong>Lưu ý:</strong> Toàn bộ quy trình theo dõi deal trên hệ thống <strong>RM Workbench</strong> và <strong>Nexus</strong>. Cập nhật trạng thái kịp thời để đảm bảo SLA.</p></div>
+        </div>
+
+        <!-- Y3 Panel: KHÁCH HÀNG -->
+        <div class="y3-panel" id="y3-panel-customers">
+          <div class="section-header" style="margin-bottom:24px">
+            <div class="section-num">2</div>
+            <div class="section-title"><h2>Tệp khách hàng đặc thù &amp; Giải pháp phù hợp</h2><p>Định hướng tiếp cận và sản phẩm ưu tiên theo từng phân khúc</p></div>
+          </div>
+          <div class="cards cards-3">
+            <div class="customer-card"><div class="customer-card-header"><div class="icon" style="background:linear-gradient(135deg,#ef4444,#b91c1c)"><i class="fas fa-hospital"></i></div><div><h3>Bệnh viện / Cơ sở Y tế</h3><span>Công lập &amp; Tư nhân, Phòng khám chuỗi</span></div></div><div class="customer-card-body"><div class="pain-points"><h4><i class="fas fa-exclamation-circle" style="color:var(--red)"></i> Pain points</h4><span class="pain-tag">Thu viện phí phức tạp</span><span class="pain-tag">Nhiều nguồn thu (BHYT, dịch vụ)</span><span class="pain-tag">Đối soát mất thời gian</span></div><h4 style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--gray);margin-bottom:8px"><i class="fas fa-lightbulb" style="color:var(--gold)"></i> Giải pháp đề xuất</h4><ul class="solutions-list"><li>Thu hộ viện phí đa kênh (QR, POS, ví điện tử)</li><li>Đối soát tự động nguồn thu BHYT + viện phí</li><li>CMS tập trung dòng tiền từ phòng khám vệ tinh</li><li>Chi hộ tự động thanh toán NCC VTYT</li></ul></div></div>
+            <div class="customer-card"><div class="customer-card-header"><div class="icon" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8)"><i class="fas fa-graduation-cap"></i></div><div><h3>Trường học / Giáo dục</h3><span>Đại học, K12, Mầm non, Trung tâm</span></div></div><div class="customer-card-body"><div class="pain-points"><h4><i class="fas fa-exclamation-circle" style="color:var(--red)"></i> Pain points</h4><span class="pain-tag">Thu học phí số lượng lớn</span><span class="pain-tag">Phụ huynh thanh toán nhiều kênh</span><span class="pain-tag">Đối soát học phí thủ công</span></div><h4 style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--gray);margin-bottom:8px"><i class="fas fa-lightbulb" style="color:var(--gold)"></i> Giải pháp đề xuất</h4><ul class="solutions-list"><li>Thu học phí qua QR, chuyển khoản định danh</li><li>Tự động đối soát học phí theo danh sách học sinh</li><li>Cổng thu học phí online tích hợp website trường</li><li>CMS gom dòng tiền nhiều cơ sở</li></ul></div></div>
+            <div class="customer-card"><div class="customer-card-header"><div class="icon" style="background:linear-gradient(135deg,#f59e0b,#d97706)"><i class="fas fa-boxes-stacked"></i></div><div><h3>Doanh nghiệp FMCG</h3><span>Hàng tiêu dùng nhanh, Nhà phân phối</span></div></div><div class="customer-card-body"><div class="pain-points"><h4><i class="fas fa-exclamation-circle" style="color:var(--red)"></i> Pain points</h4><span class="pain-tag">Mạng lưới đại lý rộng</span><span class="pain-tag">Đối soát công nợ phức tạp</span><span class="pain-tag">Dự báo dòng tiền mùa vụ</span></div><h4 style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--gray);margin-bottom:8px"><i class="fas fa-lightbulb" style="color:var(--gold)"></i> Giải pháp đề xuất</h4><ul class="solutions-list"><li>Thu hộ từ hệ thống đại lý/NPP qua QR định danh</li><li>Kết nối API với DMS/ERP đối soát tự động</li><li>CMS zero-balancing tập trung thanh khoản</li><li>Chi hộ thanh toán NCC theo lịch cố định</li></ul></div></div>
+            <div class="customer-card"><div class="customer-card-header"><div class="icon" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9)"><i class="fas fa-store"></i></div><div><h3>Chuỗi Bán lẻ / F&amp;B</h3><span>Siêu thị, Chuỗi nhà hàng, TCHT</span></div></div><div class="customer-card-body"><div class="pain-points"><h4><i class="fas fa-exclamation-circle" style="color:var(--red)"></i> Pain points</h4><span class="pain-tag">Thu tiền đa điểm bán</span><span class="pain-tag">Reconcile doanh thu mỗi ngày</span><span class="pain-tag">Quản lý tiền mặt tại điểm</span></div><h4 style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--gray);margin-bottom:8px"><i class="fas fa-lightbulb" style="color:var(--gold)"></i> Giải pháp đề xuất</h4><ul class="solutions-list"><li>POS thông minh kết nối hệ thống POS chuỗi</li><li>Cash sweeping tự động về TK tập trung</li><li>Báo cáo doanh thu theo giờ/ngày/điểm bán</li><li>Thanh toán NCC/logistics tự động</li></ul></div></div>
+            <div class="customer-card"><div class="customer-card-header"><div class="icon" style="background:linear-gradient(135deg,#06b6d4,#0e7490)"><i class="fas fa-truck-fast"></i></div><div><h3>Logistics / Vận tải</h3><span>Công ty vận tải, Kho vận, Giao hàng</span></div></div><div class="customer-card-body"><div class="pain-points"><h4><i class="fas fa-exclamation-circle" style="color:var(--red)"></i> Pain points</h4><span class="pain-tag">Thu COD hàng nghìn đơn/ngày</span><span class="pain-tag">Đối soát COD với merchant</span><span class="pain-tag">Trả tiền tài xế/đối tác</span></div><h4 style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--gray);margin-bottom:8px"><i class="fas fa-lightbulb" style="color:var(--gold)"></i> Giải pháp đề xuất</h4><ul class="solutions-list"><li>Thu COD &amp; đối soát tự động với merchant</li><li>Thanh toán hàng loạt cho tài xế/đối tác</li><li>Kết nối API với hệ thống TMS/WMS</li><li>CMS gom tiền từ kho vùng, chi nhánh</li></ul></div></div>
+            <div class="customer-card"><div class="customer-card-header"><div class="icon" style="background:linear-gradient(135deg,#10b981,#047857)"><i class="fas fa-industry"></i></div><div><h3>Doanh nghiệp Sản xuất</h3><span>Nhà máy, KCN, Xuất nhập khẩu</span></div></div><div class="customer-card-body"><div class="pain-points"><h4><i class="fas fa-exclamation-circle" style="color:var(--red)"></i> Pain points</h4><span class="pain-tag">Thanh toán NCC nước ngoài</span><span class="pain-tag">Dòng tiền đa tiền tệ</span><span class="pain-tag">Lương công nhân lớn</span></div><h4 style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--gray);margin-bottom:8px"><i class="fas fa-lightbulb" style="color:var(--gold)"></i> Giải pháp đề xuất</h4><ul class="solutions-list"><li>Thanh toán quốc tế L/C, SWIFT + Trade Finance</li><li>CMS đa tiền tệ, quản lý tỷ giá</li><li>Thanh toán lương công nhân KCN hàng loạt</li><li>Notional pooling VND + ngoại tệ</li></ul></div></div>
+          </div>
+        </div>
+
+        <!-- Y3 Panel: TÀI LIỆU -->
+        <div class="y3-panel" id="y3-panel-docs">
+          <div class="section-header" style="margin-bottom:24px">
+            <div class="section-num">3</div>
+            <div class="section-title"><h2>Tài liệu &amp; Hướng dẫn Y3</h2><p>Sales kit, nghiệp vụ, biểu phí và video thực tế</p></div>
+          </div>
+          <table class="policy-table">
+            <thead><tr><th>#</th><th>Tên tài liệu</th><th>Loại</th><th>Đối tượng</th><th>Cập nhật</th><th>Truy cập</th></tr></thead>
+            <tbody id="y3DocBody">
+              <tr><td>1</td><td><strong>Bộ Kit Bán hàng Y3</strong><br/><span style="font-size:0.78rem;color:var(--gray)">Brochure, tờ rơi, presentation deck</span></td><td><span class="badge badge-red">Sales Kit</span></td><td>RM Chi nhánh</td><td>Q1/2025</td><td><a href="https://intranet.vietinbank.vn/khdn/pages/bizlink.aspx" target="_blank" class="doc-link"><i class="fas fa-external-link-alt"></i> Truy cập</a></td></tr>
+              <tr><td>2</td><td><strong>Hướng dẫn nghiệp vụ CMS</strong><br/><span style="font-size:0.78rem;color:var(--gray)">Quy trình đăng ký, thẩm định, triển khai</span></td><td><span class="badge badge-blue">Nghiệp vụ</span></td><td>RM + TĐ KHDN</td><td>Q4/2024</td><td><a href="https://intranet.vietinbank.vn/khdn/pages/bizlink.aspx" target="_blank" class="doc-link"><i class="fas fa-external-link-alt"></i> Truy cập</a></td></tr>
+              <tr><td>3</td><td><strong>Bộ câu hỏi thường gặp (FAQ) khách hàng</strong><br/><span style="font-size:0.78rem;color:var(--gray)">Objection handling, Q&A bán hàng</span></td><td><span class="badge badge-green">Hỗ trợ bán</span></td><td>RM Chi nhánh</td><td>Q1/2025</td><td><a href="https://intranet.vietinbank.vn/khdn/pages/bizlink.aspx" target="_blank" class="doc-link"><i class="fas fa-external-link-alt"></i> Truy cập</a></td></tr>
+              <tr><td>4</td><td><strong>Biểu phí dịch vụ thanh toán</strong><br/><span style="font-size:0.78rem;color:var(--gray)">Phí CMS, thu hộ, chi hộ, API, POS</span></td><td><span class="badge badge-gold">Biểu phí</span></td><td>RM + Lãnh đạo CN</td><td>01/2025</td><td><a href="https://intranet.vietinbank.vn/khdn/pages/bizlink.aspx" target="_blank" class="doc-link"><i class="fas fa-external-link-alt"></i> Truy cập</a></td></tr>
+              <tr><td>5</td><td><strong>Slide đào tạo Y3 — Lớp RM</strong><br/><span style="font-size:0.78rem;color:var(--gray)">Tổng hợp nội dung đào tạo toàn hệ thống</span></td><td><span class="badge badge-blue">Đào tạo</span></td><td>RM Chi nhánh</td><td>Q1/2025</td><td><a href="https://intranet.vietinbank.vn/khdn/pages/bizlink.aspx" target="_blank" class="doc-link"><i class="fas fa-external-link-alt"></i> Truy cập</a></td></tr>
+            </tbody>
+          </table>
+          <div class="info-box yellow" style="margin-top:14px"><i class="fas fa-triangle-exclamation" style="flex-shrink:0;margin-top:2px"></i><p id="y3DocNote"><strong>Lưu ý:</strong> Tất cả tài liệu lưu trên Intranet KHDN VietinBank. Đăng nhập bằng tài khoản nội bộ. Nếu không truy cập được, liên hệ người phụ trách Y3 hoặc Ban SME Trụ sở.</p></div>
+          <!-- VIDEO -->
+          <div style="margin-top:36px">
+            <div style="display:flex;align-items:center;gap:8px;font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--blue-dark);margin-bottom:20px;padding-bottom:8px;border-bottom:2px solid var(--blue-pale)"><i class="fab fa-youtube" style="color:#ff0000;font-size:1.05rem"></i> Video hướng dẫn thực tế</div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px">
+              <div class="card" style="padding:16px"><h3 style="font-size:0.88rem;margin-bottom:6px">Thanh toán viện phí qua TK định danh</h3><p style="font-size:0.78rem;margin-bottom:10px">Quy trình thanh toán viện phí qua tài khoản định danh VietinBank tại cơ sở y tế.</p><a href="https://youtu.be/AA_8a42D9q0?si=NtZtx7IqL2tRL59u" target="_blank" style="display:inline-flex;align-items:center;gap:5px;font-size:0.76rem;font-weight:600;color:var(--red);text-decoration:none"><i class="fab fa-youtube"></i> Xem trên YouTube</a></div>
+              <div class="card" style="padding:16px"><h3 style="font-size:0.88rem;margin-bottom:6px">Tổng quan giải pháp thu học phí</h3><p style="font-size:0.78rem;margin-bottom:10px">Giới thiệu toàn bộ giải pháp thu học phí VietinBank dành cho các trường học.</p><a href="https://youtu.be/qugZhmiUVsA?si=T7MzJcQQtFQYi_tI" target="_blank" style="display:inline-flex;align-items:center;gap:5px;font-size:0.76rem;font-weight:600;color:var(--red);text-decoration:none"><i class="fab fa-youtube"></i> Xem trên YouTube</a></div>
+              <div class="card" style="padding:16px"><h3 style="font-size:0.88rem;margin-bottom:6px">VietinBank Merchant Platform &amp; VietQR Pay</h3><p style="font-size:0.78rem;margin-bottom:10px">Giới thiệu nền tảng Merchant Platform và dịch vụ VietQR Pay cho KHDN.</p><a href="https://youtu.be/kDBXX0XqcGU?si=nk1t_heyL7ryHQi6" target="_blank" style="display:inline-flex;align-items:center;gap:5px;font-size:0.76rem;font-weight:600;color:var(--red);text-decoration:none"><i class="fab fa-youtube"></i> Xem trên YouTube</a></div>
+              <div class="card" style="padding:16px"><h3 style="font-size:0.88rem;margin-bottom:6px">Thanh toán qua mã định danh TK</h3><p style="font-size:0.78rem;margin-bottom:10px">Hướng dẫn DN và khách hàng thanh toán qua mã định danh tài khoản VietinBank.</p><a href="https://youtu.be/hBpRjcFbWmE?si=MQ6t602KorY3PJOt" target="_blank" style="display:inline-flex;align-items:center;gap:5px;font-size:0.76rem;font-weight:600;color:var(--red);text-decoration:none"><i class="fab fa-youtube"></i> Xem trên YouTube</a></div>
+              <div class="card" style="padding:16px"><h3 style="font-size:0.88rem;margin-bottom:6px">Thanh toán học phí theo lô (eFAST)</h3><p style="font-size:0.78rem;margin-bottom:10px">Hướng dẫn xử lý thanh toán học phí hàng loạt qua hệ thống EFAST VietinBank.</p><a href="https://youtu.be/QMC2Vesg7Cc?si=DR0SrTh9Xr490sO0" target="_blank" style="display:inline-flex;align-items:center;gap:5px;font-size:0.76rem;font-weight:600;color:var(--red);text-decoration:none"><i class="fab fa-youtube"></i> Xem trên YouTube</a></div>
+              <div class="card" style="padding:16px"><h3 style="font-size:0.88rem;margin-bottom:6px">Thanh toán viện phí qua Kiosk Y tế</h3><p style="font-size:0.78rem;margin-bottom:10px">Hướng dẫn thanh toán viện phí qua Kiosk Y tế tích hợp VietinBank.</p><a href="https://youtu.be/3P9sj87GIXg?si=OSdBs_2mCrZJCObV" target="_blank" style="display:inline-flex;align-items:center;gap:5px;font-size:0.76rem;font-weight:600;color:var(--red);text-decoration:none"><i class="fab fa-youtube"></i> Xem trên YouTube</a></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Y3 Panel: LIÊN HỆ -->
+        <div class="y3-panel" id="y3-panel-contact">
+          <div class="section-header" style="margin-bottom:24px">
+            <div class="section-num">4</div>
+            <div class="section-title"><h2>Cán bộ Ban SME phụ trách Chi nhánh</h2><p>Tra cứu người phụ trách theo khu vực và chi nhánh</p></div>
+          </div>
+          <div class="staff-toolbar">
+            <div class="staff-search-wrap"><i class="fas fa-magnifying-glass"></i><input type="text" id="y3StaffSearch" placeholder="Tìm theo tên CN, mã CN, cán bộ..." oninput="filterY3Staff()" /></div>
+            <div class="staff-filter-wrap"><select id="y3KvFilter" onchange="filterY3Staff()"><option value="">Tất cả khu vực</option><option value="KV1">KV1 — Tây Bắc Bộ &amp; ĐBB</option><option value="KV2">KV2 — Hải Phòng &amp; QN</option><option value="KV3">KV3 — Hà Nội</option><option value="KV4">KV4 — Bắc Trung Bộ</option><option value="KV5">KV5 — NTB &amp; Tây Nguyên</option><option value="KV6">KV6 — ĐBSCL</option><option value="KV7">KV7 — TP.HCM &amp; ĐNB</option></select></div>
+            <div id="y3StaffCount" class="staff-count">155 Chi nhánh · 7 Khu vực</div>
+          </div>
+          <div class="staff-table-wrap"><table class="staff-table"><thead><tr><th>STT</th><th>Khu vực</th><th>Mã CN</th><th>Tên Chi nhánh</th><th>Cán bộ Ban SME phụ trách</th><th>Lãnh đạo phụ trách</th><th></th></tr></thead>
+          <tbody id="y3StaffTbody">
+            <tr data-kv="KV1" data-search="kv1 lào cai 180 phạm trung tuyến tạ minh thu"><td>1</td><td><span class="kv-badge kv1">KV1</span><div style="font-size:0.68rem;color:var(--gray)">Tây Bắc &amp; ĐBB</div></td><td><span class="cn-code">180</span></td><td><strong>Lào Cai</strong></td><td><div class="staff-name"><i class="fas fa-user-circle"></i> Phạm Trung Tuyến</div></td><td><div class="staff-name leader"><i class="fas fa-user-tie"></i> Tạ Minh Thu</div></td><td><button class="staff-contact-btn"><i class="fab fa-microsoft"></i></button></td></tr>
+            <tr data-kv="KV1" data-search="kv1 yên bái 150 nguyễn lan anh tạ minh thu"><td>2</td><td><span class="kv-badge kv1">KV1</span></td><td><span class="cn-code">150</span></td><td><strong>Yên Bái</strong></td><td><div class="staff-name"><i class="fas fa-user-circle"></i> Nguyễn Lan Anh</div></td><td><div class="staff-name leader"><i class="fas fa-user-tie"></i> Tạ Minh Thu</div></td><td><button class="staff-contact-btn"><i class="fab fa-microsoft"></i></button></td></tr>
+            <tr data-kv="KV2" data-search="kv2 hải phòng 102 trần văn hùng nguyễn thị phương"><td>3</td><td><span class="kv-badge kv2">KV2</span><div style="font-size:0.68rem;color:var(--gray)">HP &amp; QN</div></td><td><span class="cn-code">102</span></td><td><strong>Hải Phòng</strong></td><td><div class="staff-name"><i class="fas fa-user-circle"></i> Trần Văn Hùng</div></td><td><div class="staff-name leader"><i class="fas fa-user-tie"></i> Nguyễn Thị Phương</div></td><td><button class="staff-contact-btn"><i class="fab fa-microsoft"></i></button></td></tr>
+            <tr data-kv="KV3" data-search="kv3 hà nội 001 lê minh quang nguyễn đức thắng"><td>4</td><td><span class="kv-badge kv3">KV3</span><div style="font-size:0.68rem;color:var(--gray)">Hà Nội</div></td><td><span class="cn-code">001</span></td><td><strong>Hà Nội</strong></td><td><div class="staff-name"><i class="fas fa-user-circle"></i> Lê Minh Quang</div></td><td><div class="staff-name leader"><i class="fas fa-user-tie"></i> Nguyễn Đức Thắng</div></td><td><button class="staff-contact-btn"><i class="fab fa-microsoft"></i></button></td></tr>
+            <tr data-kv="KV5" data-search="kv5 đà nẵng 401 phạm thị hoa trần minh đức"><td>5</td><td><span class="kv-badge kv5">KV5</span><div style="font-size:0.68rem;color:var(--gray)">NTB &amp; TN</div></td><td><span class="cn-code">401</span></td><td><strong>Đà Nẵng</strong></td><td><div class="staff-name"><i class="fas fa-user-circle"></i> Phạm Thị Hoa</div></td><td><div class="staff-name leader"><i class="fas fa-user-tie"></i> Trần Minh Đức</div></td><td><button class="staff-contact-btn"><i class="fab fa-microsoft"></i></button></td></tr>
+            <tr data-kv="KV7" data-search="kv7 hcm sài gòn 701 nguyễn văn bình hoàng thị lan"><td>6</td><td><span class="kv-badge kv7">KV7</span><div style="font-size:0.68rem;color:var(--gray)">TP.HCM &amp; ĐNB</div></td><td><span class="cn-code">701</span></td><td><strong>TP. Hồ Chí Minh</strong></td><td><div class="staff-name"><i class="fas fa-user-circle"></i> Nguyễn Văn Bình</div></td><td><div class="staff-name leader"><i class="fas fa-user-tie"></i> Hoàng Thị Lan</div></td><td><button class="staff-contact-btn"><i class="fab fa-microsoft"></i></button></td></tr>
+          </tbody></table></div>
+          <div class="info-box blue" style="margin-top:16px"><i class="fas fa-circle-info" style="flex-shrink:0;margin-top:2px"></i><p><strong>Lưu ý:</strong> Danh sách cán bộ phụ trách được cập nhật theo quý bởi Ban KHDN VVN. Liên hệ qua Microsoft Teams nội bộ hoặc email VietinBank. Nếu có thay đổi, vui lòng phản hồi về đầu mối Ban SME Trụ sở chính.</p></div>
+        </div>
+
+        <!-- Y3 Panel: FAQ -->
+        <div class="y3-panel" id="y3-panel-faq">
+          <div class="section-header" style="margin-bottom:24px">
+            <div class="section-num">5</div>
+            <div class="section-title"><h2>Khó khăn vướng mắc thường gặp</h2><p>Giải đáp các câu hỏi phổ biến khi triển khai Y3 tại Chi nhánh</p></div>
+          </div>
+          <div id="y3FaqList">
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><div class="faq-q-left"><div class="faq-num">1</div><span>Khách hàng hỏi phí thu hộ / chi hộ / CMS là bao nhiêu?</span></div><i class="fas fa-chevron-down faq-chevron"></i></button><div class="faq-answer"><p>Biểu phí được ban hành và cập nhật định kỳ. RM tra cứu biểu phí mới nhất trên Intranet KHDN hoặc liên hệ đầu mối Ban SME phụ trách. <strong>Không</strong> báo phí cũ hoặc phí ước tính cho khách hàng trước khi xác nhận chính sách hiện hành.</p><div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:10px 14px;margin-top:10px;font-size:0.8rem;color:#92400e;display:flex;gap:8px"><i class="fas fa-lightbulb" style="flex-shrink:0;margin-top:2px"></i> <span>Tip: Hỏi KH về khối lượng giao dịch/tháng để RM có thể tính toán phí ước tính và đề xuất gói phù hợp.</span></div></div></div>
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><div class="faq-q-left"><div class="faq-num">2</div><span>Thời gian triển khai một giải pháp Y3 mất bao lâu?</span></div><i class="fas fa-chevron-down faq-chevron"></i></button><div class="faq-answer"><p>Tùy theo độ phức tạp của giải pháp:</p><ul><li><strong>Giải pháp tiêu chuẩn (QR, Thu hộ đơn giản):</strong> 2-4 tuần sau khi ký kết hợp đồng</li><li><strong>Giải pháp tích hợp API/ERP:</strong> 4-8 tuần (phụ thuộc vào hệ thống CNTT của KH)</li><li><strong>CMS phức tạp (Notional Pooling, Multi-bank):</strong> 8-12 tuần</li></ul><p style="margin-top:8px">Thời gian thực tế theo SLA được ghi nhận tại mục Quy trình Phối hợp.</p></div></div>
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><div class="faq-q-left"><div class="faq-num">3</div><span>Khách hàng đã có tài khoản ngân hàng khác, vẫn triển khai được Y3?</span></div><i class="fas fa-chevron-down faq-chevron"></i></button><div class="faq-answer"><p>Có. Các giải pháp Y3 như Thu hộ, Chi hộ, CMS có thể triển khai độc lập với ngân hàng khác. Ưu điểm VietinBank là hạ tầng thanh toán rộng, kết nối NAPAS, mạng lưới ATM/POS lớn và khả năng tích hợp ERP đã được kiểm chứng với nhiều doanh nghiệp lớn.</p></div></div>
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><div class="faq-q-left"><div class="faq-num">4</div><span>KH nói phần mềm của họ không có trong danh sách tích hợp sẵn?</span></div><i class="fas fa-chevron-down faq-chevron"></i></button><div class="faq-answer"><p>VietinBank hỗ trợ kết nối qua Open API (REST API chuẩn ISO 20022) với bất kỳ hệ thống nào. Trong trường hợp phần mềm chưa có sẵn template, phía CNTT của KH cần tích hợp theo tài liệu Techspec VietinBank cung cấp.</p><ul style="margin-top:8px"><li>RM tổ chức cuộc họp 3 bên: KH + CNTT VietinBank + nhà cung cấp phần mềm</li><li>VietinBank có môi trường Sandbox để test trước khi go-live</li></ul></div></div>
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><div class="faq-q-left"><div class="faq-num">5</div><span>Làm thế nào để escalate deal Y3 lên Ban SME khi vượt thẩm quyền Chi nhánh?</span></div><i class="fas fa-chevron-down faq-chevron"></i></button><div class="faq-answer"><p>Quy trình escalate:</p><ul><li>RM lập tờ trình deal → Lãnh đạo Chi nhánh ký duyệt</li><li>Gửi hồ sơ cho cán bộ Ban SME phụ trách Chi nhánh (xem tab Phụ trách)</li><li>Ban SME tiếp nhận → tạo task trên hệ thống → SLA bắt đầu tính</li><li>Theo dõi trạng thái deal qua RM Workbench / Nexus</li></ul></div></div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <!-- ===== PANEL: CONNECT 34 ===== -->
+    <div class="panel" id="panel-connect34">
+      <section class="hero" style="padding:36px 40px 44px">
+        <div class="hero-inner">
+          <div class="hero-badge"><i class="fas fa-link"></i> Nguồn vốn · Connect 34</div>
+          <h1><span class="accent">Connect 34</span><br/>Kết nối Hệ sinh thái Đối tác</h1>
+          <p class="hero-desc" id="c34-desc">Chương trình kết nối VietinBank với 34+ đối tác chiến lược, tạo ra hệ sinh thái sản phẩm dịch vụ tích hợp mang lại giá trị vượt trội cho khách hàng doanh nghiệp trong chuỗi cung ứng.</p>
+        </div>
+      </section>
+      <section class="section">
+        <div class="solution-header">
+          <div class="solution-header-icon"><i class="fas fa-link"></i></div>
+          <div><h3 id="c34-main-title">Về Chương trình Connect 34</h3><p id="c34-main-desc">Connect 34 là sáng kiến chiến lược của VietinBank nhằm kết nối mạng lưới đối tác trong các lĩnh vực trọng yếu, giúp KHDN VVN tiếp cận dịch vụ tài chính ưu đãi và giải pháp kinh doanh toàn diện thông qua một đầu mối.</p></div>
+        </div>
+        <div class="cards cards-3" style="margin-top:0">
+          <div class="card"><div class="card-icon blue"><i class="fas fa-store"></i></div><div class="card-tag blue">Bán lẻ &amp; FMCG</div><h3>Chuỗi Siêu thị &amp; Bán lẻ</h3><p>Kết nối với các chuỗi siêu thị, trung tâm thương mại lớn. KHDN trong chuỗi được hỗ trợ tín dụng chuỗi cung ứng, thanh toán điện tử và giải pháp quản lý dòng tiền ưu đãi.</p><ul><li>Supply chain finance cho nhà cung cấp</li><li>Thanh toán thương mại điện tử tích hợp</li><li>Hạn mức tín dụng theo hợp đồng với đối tác</li></ul></div>
+          <div class="card"><div class="card-icon gold"><i class="fas fa-tractor"></i></div><div class="card-tag gold">Nông nghiệp</div><h3>Chuỗi Nông nghiệp &amp; Thực phẩm</h3><p>Hỗ trợ tài chính cho toàn chuỗi giá trị nông nghiệp: từ đầu vào (phân bón, giống), sản xuất, chế biến đến phân phối. Ưu tiên cấp tín dụng xanh và ưu đãi lãi suất.</p><ul><li>Tín dụng chuỗi giá trị nông nghiệp</li><li>Thu hộ tiêu thụ nông sản từ HTX, hộ nông dân</li><li>Bảo lãnh hợp đồng thu mua nông sản</li></ul></div>
+          <div class="card"><div class="card-icon teal"><i class="fas fa-truck"></i></div><div class="card-tag teal">Logistics</div><h3>Mạng lưới Logistics &amp; Vận tải</h3><p>Kết nối với các công ty logistics, vận tải hàng đầu. Giải pháp tài chính phù hợp với đặc thù dòng tiền, tài sản và chu kỳ kinh doanh của ngành vận tải.</p><ul><li>Cho vay mua phương tiện vận tải (xe tải, đầu kéo)</li><li>Thu COD và đối soát tự động</li><li>Bảo lãnh hợp đồng vận chuyển lớn</li></ul></div>
+          <div class="card"><div class="card-icon purple"><i class="fas fa-hospital"></i></div><div class="card-tag purple">Y tế &amp; Dược</div><h3>Chuỗi Y tế &amp; Dược phẩm</h3><p>Đối tác với các nhà phân phối dược phẩm, thiết bị y tế. Hỗ trợ tài chính cho chu kỳ vốn lưu động đặc thù, thu hộ viện phí và thanh toán bảo hiểm.</p><ul><li>Tín dụng nhà phân phối dược/VTYT</li><li>Thu hộ viện phí, đối soát BHYT tự động</li><li>CMS tập trung cho hệ thống bệnh viện/phòng khám</li></ul></div>
+          <div class="card"><div class="card-icon green"><i class="fas fa-solar-panel"></i></div><div class="card-tag green">Năng lượng &amp; Môi trường</div><h3>Năng lượng Tái tạo &amp; Môi trường</h3><p>Tài trợ cho các dự án điện mặt trời, điện gió áp mái, hệ thống xử lý nước thải. Ưu đãi tín dụng xanh đặc biệt từ VietinBank.</p><ul><li>Cho vay lắp đặt điện mặt trời áp mái</li><li>Tín dụng xanh lãi suất ưu đãi</li><li>Liên kết tái cấp vốn từ các tổ chức quốc tế</li></ul></div>
+          <div class="card"><div class="card-icon red"><i class="fas fa-landmark"></i></div><div class="card-tag">Công nghệ &amp; Fintech</div><h3>Hệ sinh thái Công nghệ &amp; Số</h3><p>Kết nối với các nền tảng thương mại điện tử, Fintech, Proptech. Mở ra kênh bán hàng mới và tích hợp giải pháp thanh toán số hiện đại cho KHDN.</p><ul><li>Payment gateway tích hợp sàn TMĐT</li><li>Open Banking API cho Fintech đối tác</li><li>Dịch vụ thanh toán số đa kênh</li></ul></div>
+        </div>
+        <div class="info-box blue" style="margin-top:24px"><i class="fas fa-circle-info" style="flex-shrink:0;margin-top:2px"></i><p><strong>Cập nhật danh sách đối tác:</strong> Danh sách 34+ đối tác chiến lược trong chương trình Connect 34 được cập nhật thường xuyên. RM tra cứu danh sách chi tiết và điều kiện ưu đãi theo từng đối tác trên hệ thống Intranet KHDN VVN.</p></div>
+        <!-- BENEFITS -->
+        <div class="mini-header" style="margin-top:40px">
+          <div class="mini-header-icon" style="background:var(--gold-light)"><i class="fas fa-star" style="color:#d97706"></i></div>
+          <div><h3>Lợi ích cho Khách hàng trong chuỗi Connect 34</h3><p>Ưu đãi đặc biệt dành riêng cho DN là đối tác/nhà cung cấp trong hệ sinh thái</p></div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px">
+          <div style="background:white;border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:flex-start;gap:10px"><i class="fas fa-percent" style="color:var(--red);font-size:1.2rem"></i><div><div style="font-size:0.9rem;font-weight:700;color:var(--blue-dark);margin-bottom:4px">Lãi suất ưu đãi</div><div style="font-size:0.8rem;color:var(--gray)">Giảm 0.5-1%/năm so với lãi suất thông thường cho DN trong chuỗi</div></div></div>
+          <div style="background:white;border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:flex-start;gap:10px"><i class="fas fa-file-circle-check" style="color:var(--red);font-size:1.2rem"></i><div><div style="font-size:0.9rem;font-weight:700;color:var(--blue-dark);margin-bottom:4px">Thủ tục nhanh gọn</div><div style="font-size:0.8rem;color:var(--gray)">Hồ sơ rút gọn nhờ dữ liệu giao dịch chuỗi, thẩm định nhanh hơn 50%</div></div></div>
+          <div style="background:white;border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:flex-start;gap:10px"><i class="fas fa-bolt" style="color:var(--red);font-size:1.2rem"></i><div><div style="font-size:0.9rem;font-weight:700;color:var(--blue-dark);margin-bottom:4px">Giải ngân tức thì</div><div style="font-size:0.8rem;color:var(--gray)">Hạn mức tín dụng chuỗi, giải ngân theo đơn hàng thực tế</div></div></div>
+          <div style="background:white;border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:flex-start;gap:10px"><i class="fas fa-headset" style="color:var(--red);font-size:1.2rem"></i><div><div style="font-size:0.9rem;font-weight:700;color:var(--blue-dark);margin-bottom:4px">Dedicated RM</div><div style="font-size:0.8rem;color:var(--gray)">Cán bộ QHKH chuyên trách am hiểu ngành, tư vấn toàn diện</div></div></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ===== PANEL: NGUỒN VỐN - CHÍNH SÁCH ===== -->
+    <div class="panel" id="panel-nv-cs">
+      <section class="hero" style="padding:36px 40px 44px">
+        <div class="hero-inner">
+          <div class="hero-badge"><i class="fas fa-file-contract"></i> Chính sách Nguồn vốn</div>
+          <h1>Chính sách <span class="accent">Huy động Vốn</span></h1>
+          <p class="hero-desc">Lãi suất tiền gửi, điều kiện mở tài khoản và chính sách CASA dành cho Khách hàng Doanh nghiệp VVN tại VietinBank.</p>
+        </div>
+      </section>
+      <section class="section">
+        <div class="cards cards-2" style="margin-bottom:28px">
+          <div class="card"><div class="card-icon blue"><i class="fas fa-piggy-bank"></i></div><h3>Tiền gửi Thanh toán (CASA)</h3><p>Tài khoản thanh toán doanh nghiệp không kỳ hạn. Lãi suất theo biểu lãi suất hiện hành của VietinBank. Không giới hạn số lần giao dịch, rút tiền linh hoạt 24/7 qua eFAST, ATM, quầy giao dịch.</p><ul><li>Mở online qua eFAST không cần đến quầy</li><li>Kết nối với Y3, Chi hộ, Thu hộ trực tiếp</li><li>Thống kê giao dịch real-time, xuất báo cáo tức thì</li></ul></div>
+          <div class="card"><div class="card-icon blue"><i class="fas fa-calendar-check"></i></div><h3>Tiền gửi Có kỳ hạn Doanh nghiệp</h3><p>Gửi tiền có kỳ hạn từ 1 tuần đến 36 tháng với lãi suất hấp dẫn. Phù hợp với nguồn vốn nhàn rỗi doanh nghiệp chưa sử dụng. Có thể gửi online qua eFAST hoặc iPay Business.</p><ul><li>Kỳ hạn linh hoạt: 1W, 2W, 1M, 3M, 6M, 12M, 24M, 36M</li><li>Lãi suất theo biểu VietinBank từng thời kỳ</li><li>Tự động tái gửi khi đáo hạn</li></ul></div>
+          <div class="card"><div class="card-icon blue"><i class="fas fa-chart-area"></i></div><h3>Tiền gửi Thông minh (Smart Deposit)</h3><p>Kết hợp tính thanh khoản của TG thanh toán với lãi suất gần tương đương TG có kỳ hạn. Số dư vượt ngưỡng tự động chuyển vào gói lãi suất cao, đảm bảo tối ưu lãi trên toàn bộ nguồn vốn.</p><ul><li>Tự động sweeping khi vượt ngưỡng số dư</li><li>Hưởng lãi suất bậc thang theo quy mô số dư</li><li>Không mất tính thanh khoản khi cần rút tiền</li></ul></div>
+          <div class="card"><div class="card-icon blue"><i class="fas fa-coins"></i></div><h3>Tiền gửi Ngoại tệ</h3><p>Gửi tiền bằng USD, EUR, và các ngoại tệ phổ biến. Phù hợp với doanh nghiệp xuất nhập khẩu cần giữ ngoại tệ thanh toán hợp đồng thương mại quốc tế.</p><ul><li>Kỳ hạn linh hoạt, lãi suất cạnh tranh</li><li>Kết nối với tài khoản kinh doanh ngoại tệ</li><li>Tư vấn hedging tỷ giá qua bộ phận FX VietinBank</li></ul></div>
+        </div>
+        <div class="mini-header">
+          <div class="mini-header-icon" style="background:var(--blue-pale)"><i class="fas fa-clipboard-list" style="color:var(--blue-dark)"></i></div>
+          <div><h3>Tài liệu Chính sách Nguồn vốn</h3><p>Biểu lãi suất và hướng dẫn nghiệp vụ huy động</p></div>
+        </div>
+        <table class="policy-table">
+          <thead><tr><th>#</th><th>Tên tài liệu</th><th>Loại</th><th>Cập nhật</th><th>Truy cập</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td><strong>Biểu lãi suất huy động KHDN</strong><br/><span style="font-size:0.78rem;color:var(--gray)">Lãi suất TG thanh toán, có kỳ hạn, ngoại tệ</span></td><td><span class="badge badge-gold">Lãi suất</span></td><td>Cập nhật theo tuần</td><td><a href="https://intranet.vietinbank.vn" target="_blank" class="doc-link"><i class="fas fa-external-link-alt"></i> Intranet</a></td></tr>
+            <tr><td>2</td><td><strong>Chính sách CASA doanh nghiệp</strong><br/><span style="font-size:0.78rem;color:var(--gray)">Điều kiện mở TK, ưu đãi phí, chương trình khuyến mại</span></td><td><span class="badge badge-blue">Chính sách</span></td><td>Q1/2025</td><td><a href="https://intranet.vietinbank.vn" target="_blank" class="doc-link"><i class="fas fa-external-link-alt"></i> Intranet</a></td></tr>
+            <tr><td>3</td><td><strong>Quy trình mở TK Doanh nghiệp</strong><br/><span style="font-size:0.78rem;color:var(--gray)">Hồ sơ, thủ tục mở TK online và tại quầy</span></td><td><span class="badge badge-blue">Nghiệp vụ</span></td><td>2025</td><td><a href="https://intranet.vietinbank.vn" target="_blank" class="doc-link"><i class="fas fa-external-link-alt"></i> Intranet</a></td></tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+
+    <!-- ===== PANEL: THU NGOÀI LÃI - SẢN PHẨM ===== -->
+    <div class="panel" id="panel-tnl-spdv">
+      <section class="hero" style="padding:36px 40px 44px;background:linear-gradient(135deg,#16a34a 0%,#15803d 55%,#166534 100%)">
+        <div class="hero-inner">
+          <div class="hero-badge" style="background:rgba(244,168,54,0.15);border-color:rgba(244,168,54,0.35)"><i class="fas fa-chart-bar"></i> Nhóm 3 — Thu ngoài lãi</div>
+          <h1>Sản phẩm <span class="accent">Thu ngoài lãi</span></h1>
+          <p class="hero-desc" id="tnl-spdv-desc">Danh mục dịch vụ Thanh toán quốc tế, Kinh doanh ngoại tệ, Bảo hiểm, Ngân hàng điện tử và các dịch vụ gia tăng giá trị cho KHDN VVN.</p>
+        </div>
+      </section>
+      <section class="section">
+        <div class="solution-header green">
+          <div class="solution-header-icon"><i class="fas fa-chart-bar"></i></div>
+          <div><h3 id="tnl-main-title">Định hướng tăng Thu ngoài lãi</h3><p id="tnl-main-desc">Thu ngoài lãi là mục tiêu chiến lược của VietinBank. RM chủ động cross-sell dịch vụ TTQT, KDNT, ngân hàng điện tử và bảo hiểm khi tiếp cận khách hàng. Mỗi khoản vay được cấp cần đi kèm với ít nhất 2-3 dịch vụ thu ngoài lãi.</p></div>
+        </div>
+        <!-- TTQT -->
+        <div class="mini-header" style="margin-top:36px">
+          <div class="mini-header-icon" style="background:#f0fdf4"><i class="fas fa-globe" style="color:#15803d"></i></div>
+          <div><h3>A. Thanh toán Quốc tế (TTQT)</h3><p>Tài trợ và thanh toán xuất nhập khẩu — thế mạnh hàng đầu của VietinBank</p></div>
+        </div>
+        <div class="cards cards-3">
+          <div class="card"><div class="card-icon green"><i class="fas fa-file-invoice"></i></div><div class="card-tag green">L/C Nhập khẩu</div><h3>Thư tín dụng (L/C) Nhập khẩu</h3><p>Phát hành L/C Sight, Usance, UPAS, Back-to-Back. Phí cạnh tranh, quy trình nhanh, mạng lưới ngân hàng đại lý rộng trên toàn cầu.</p></div>
+          <div class="card"><div class="card-icon green"><i class="fas fa-ship"></i></div><div class="card-tag green">L/C Xuất khẩu</div><h3>Thư tín dụng (L/C) Xuất khẩu &amp; Chiết khấu</h3><p>Thông báo L/C, chiết khấu chứng từ xuất khẩu miễn truy đòi / có truy đòi. Bảo lãnh thực hiện hợp đồng xuất khẩu.</p></div>
+          <div class="card"><div class="card-icon green"><i class="fas fa-right-left"></i></div><div class="card-tag green">Chuyển tiền &amp; Nhờ thu</div><h3>Chuyển tiền TTR &amp; Nhờ thu D/P, D/A</h3><p>Chuyển tiền quốc tế SWIFT nhanh, phí thấp. Nhờ thu xuất nhập khẩu D/P (Documents against Payment), D/A (Documents against Acceptance).</p></div>
+        </div>
+        <!-- KDNT -->
+        <div class="mini-header" style="margin-top:40px">
+          <div class="mini-header-icon" style="background:#f0fdf4"><i class="fas fa-coins" style="color:#15803d"></i></div>
+          <div><h3>B. Kinh doanh Ngoại tệ (KDNT)</h3><p>Giao dịch mua bán, kỳ hạn và phái sinh ngoại tệ</p></div>
+        </div>
+        <div class="cards cards-3">
+          <div class="card"><div class="card-icon green"><i class="fas fa-exchange-alt"></i></div><div class="card-tag green">Spot &amp; Forward</div><h3>Mua bán Ngoại tệ Spot &amp; Kỳ hạn</h3><p>Giao dịch mua bán ngoại tệ giao ngay (spot) và kỳ hạn (forward) với tỷ giá cạnh tranh. Phù hợp DN xuất nhập khẩu cần phòng ngừa rủi ro tỷ giá.</p></div>
+          <div class="card"><div class="card-icon green"><i class="fas fa-chart-line"></i></div><div class="card-tag green">Hedging</div><h3>Phái sinh Ngoại tệ (FX Derivatives)</h3><p>Hợp đồng hoán đổi (Swap), quyền chọn (Option) ngoại tệ. Giúp DN khóa tỷ giá, phòng ngừa rủi ro biến động tỷ giá trên các hợp đồng thương mại lớn.</p></div>
+          <div class="card"><div class="card-icon green"><i class="fas fa-hand-holding-usd"></i></div><div class="card-tag green">Đổi tiền mặt</div><h3>Đổi ngoại tệ tiền mặt Doanh nghiệp</h3><p>Dịch vụ đổi ngoại tệ tiền mặt phục vụ nhu cầu công tác nước ngoài, thanh toán đại lý. Tỷ giá cạnh tranh, xử lý nhanh tại quầy hoặc qua eFAST.</p></div>
+        </div>
+        <!-- BAO HIEM -->
+        <div class="mini-header" style="margin-top:40px">
+          <div class="mini-header-icon" style="background:#f0fdf4"><i class="fas fa-shield-heart" style="color:#15803d"></i></div>
+          <div><h3>C. Bảo hiểm Doanh nghiệp</h3><p>Bảo hiểm tài sản, nhân thọ nhóm và bảo hiểm liên kết tín dụng</p></div>
+        </div>
+        <div class="cards cards-3">
+          <div class="card"><div class="card-icon green"><i class="fas fa-building-shield"></i></div><div class="card-tag green">Tài sản</div><h3>Bảo hiểm Tài sản Doanh nghiệp</h3><p>Bảo hiểm hỏa hoạn, thiên tai, trộm cắp cho tài sản doanh nghiệp (nhà xưởng, hàng hóa, thiết bị). Đối tác: PTI VietinBank Insurance.</p></div>
+          <div class="card"><div class="card-icon green"><i class="fas fa-users-shield"></i></div><div class="card-tag green">Nhân thọ nhóm</div><h3>Bảo hiểm Nhân thọ Nhóm Nhân viên</h3><p>Sản phẩm bảo hiểm nhân thọ nhóm cho toàn bộ nhân viên, phúc lợi doanh nghiệp. Đối tác: VietinBank Aviva Life Insurance.</p></div>
+          <div class="card"><div class="card-icon green"><i class="fas fa-file-shield"></i></div><div class="card-tag green">Liên kết tín dụng</div><h3>Bảo hiểm Khoản vay</h3><p>Bảo hiểm nhân mạng người vay, bảo hiểm tài sản bảo đảm. Giảm rủi ro cho cả ngân hàng và doanh nghiệp trong suốt thời gian vay.</p></div>
+        </div>
+        <!-- NGAN HANG DIEN TU -->
+        <div class="mini-header" style="margin-top:40px">
+          <div class="mini-header-icon" style="background:#f0fdf4"><i class="fas fa-laptop" style="color:#15803d"></i></div>
+          <div><h3>D. Ngân hàng Điện tử Doanh nghiệp</h3><p>Quản lý tài khoản, giao dịch và dịch vụ số cho KHDN</p></div>
+        </div>
+        <div class="cards cards-2">
+          <div class="card"><div class="card-icon blue"><i class="fas fa-desktop"></i></div><div class="card-tag blue">Internet Banking DN</div><h3>VietinBank eFAST</h3><p>Nền tảng Internet Banking doanh nghiệp đa chức năng: quản lý tài khoản, thanh toán, chuyển tiền, L/C, chi lương, tra cứu lịch sử giao dịch. Phân quyền người dùng linh hoạt theo vai trò.</p><ul><li>Phê duyệt 4-mắt (dual control) an toàn</li><li>Tích hợp token phần mềm / phần cứng</li><li>Module thanh toán quốc tế, L/C online</li><li>Hỗ trợ API kết nối ERP doanh nghiệp</li></ul></div>
+          <div class="card"><div class="card-icon blue"><i class="fas fa-mobile-alt"></i></div><div class="card-tag blue">Mobile Banking DN</div><h3>VietinBank iPay Business</h3><p>Ứng dụng mobile banking dành riêng cho chủ doanh nghiệp và kế toán. Phê duyệt giao dịch, tra cứu số dư, chuyển tiền từ điện thoại mọi lúc mọi nơi.</p><ul><li>Phê duyệt giao dịch nhanh qua mobile</li><li>Thông báo push cho mọi biến động tài khoản</li><li>Tích hợp FaceID / TouchID bảo mật</li></ul></div>
+          <div class="card"><div class="card-icon blue"><i class="fas fa-credit-card"></i></div><div class="card-tag blue">Thẻ DN</div><h3>Thẻ Tín dụng Doanh nghiệp (Business Card)</h3><p>Thẻ Visa/Mastercard Business cho chi tiêu công tác, mua sắm văn phòng. Hạn mức riêng cho từng nhân viên, kiểm soát chi phí, đối soát tự động với hóa đơn.</p><ul><li>Quản lý chi phí nhân viên tập trung</li><li>Thanh toán trực tuyến quốc tế</li><li>Báo cáo chi tiêu theo phòng ban/nhân viên</li></ul></div>
+          <div class="card"><div class="card-icon blue"><i class="fas fa-users"></i></div><div class="card-tag blue">Payroll</div><h3>Dịch vụ Chi lương (Payroll)</h3><p>Dịch vụ chi trả lương, thưởng hàng loạt cho nhân viên. Tích hợp với phần mềm HRMS, xử lý tự động, mở tài khoản lương nhân viên cùng lúc.</p><ul><li>Mở TK lương cho nhân viên mới hàng loạt</li><li>Chi lương tự động theo ngày quy định</li><li>Báo cáo chi lương và thuế TNCN</li></ul></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ===== PANEL: THU NGOÀI LÃI - CHÍNH SÁCH ===== -->
+    <div class="panel" id="panel-tnl-cs">
+      <section class="hero" style="padding:36px 40px 44px;background:linear-gradient(135deg,#16a34a 0%,#15803d 55%,#166534 100%)">
+        <div class="hero-inner">
+          <div class="hero-badge"><i class="fas fa-file-contract"></i> Chính sách Thu ngoài lãi</div>
+          <h1>Chính sách &amp; <span class="accent">Biểu phí Dịch vụ</span></h1>
+          <p class="hero-desc">Biểu phí dịch vụ, chương trình ưu đãi và các chính sách áp dụng cho KHDN VVN sử dụng dịch vụ thu ngoài lãi tại VietinBank.</p>
+        </div>
+      </section>
+      <section class="section">
+        <div class="cards cards-2" style="margin-bottom:28px">
+          <div class="card"><div class="card-icon green"><i class="fas fa-tag"></i></div><h3>Biểu phí Dịch vụ Ngân hàng</h3><p>Biểu phí đầy đủ cho tất cả dịch vụ TTQT, KDNT, eFAST, Thẻ DN, Payroll được ban hành và cập nhật định kỳ. RM tra cứu biểu phí mới nhất trước khi tư vấn khách hàng.</p><div class="info-box green" style="margin-top:12px;padding:10px 14px"><i class="fas fa-link" style="flex-shrink:0"></i><a href="https://intranet.vietinbank.vn" target="_blank" class="doc-link" style="margin-left:0;border-color:#15803d;color:#15803d">Tra cứu biểu phí nội bộ</a></div></div>
+          <div class="card"><div class="card-icon green"><i class="fas fa-gift"></i></div><h3>Chương trình Ưu đãi Phí</h3><p>VietinBank thường xuyên triển khai chương trình miễn/giảm phí có thời hạn cho KHDN mới, KH có doanh số giao dịch cao, hoặc KH trong chuỗi Connect 34. Liên hệ Ban SME để biết ưu đãi hiện hành.</p><div class="info-box yellow" style="margin-top:12px;padding:10px 14px"><i class="fas fa-triangle-exclamation" style="flex-shrink:0"></i><span style="font-size:0.8rem">Cập nhật ưu đãi theo từng chiến dịch bán hàng</span></div></div>
+        </div>
+        <div class="mini-header">
+          <div class="mini-header-icon" style="background:#f0fdf4"><i class="fas fa-clipboard-list" style="color:#15803d"></i></div>
+          <div><h3>Tài liệu Chính sách Thu ngoài lãi</h3><p>Biểu phí và hướng dẫn nghiệp vụ các sản phẩm thu ngoài lãi</p></div>
+        </div>
+        <table class="policy-table">
+          <thead><tr><th>#</th><th>Tên tài liệu</th><th>Loại</th><th>Cập nhật</th><th>Truy cập</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td><strong>Biểu phí Thanh toán Quốc tế KHDN</strong><br/><span style="font-size:0.78rem;color:var(--gray)">Phí L/C, TTR, nhờ thu, chiết khấu chứng từ</span></td><td><span class="badge badge-gold">Biểu phí</span></td><td>Cập nhật theo quý</td><td><a href="https://intranet.vietinbank.vn" target="_blank" class="doc-link"><i class="fas fa-external-link-alt"></i> Intranet</a></td></tr>
+            <tr><td>2</td><td><strong>Biểu phí Kinh doanh Ngoại tệ</strong><br/><span style="font-size:0.78rem;color:var(--gray)">Spread tỷ giá, phí giao dịch phái sinh</span></td><td><span class="badge badge-gold">Biểu phí</span></td><td>Cập nhật theo tháng</td><td><a href="https://intranet.vietinbank.vn" target="_blank" class="doc-link"><i class="fas fa-external-link-alt"></i> Intranet</a></td></tr>
+            <tr><td>3</td><td><strong>Biểu phí Ngân hàng Điện tử KHDN</strong><br/><span style="font-size:0.78rem;color:var(--gray)">Phí eFAST, iPay Business, API, Thẻ DN</span></td><td><span class="badge badge-gold">Biểu phí</span></td><td>Q1/2025</td><td><a href="https://intranet.vietinbank.vn" target="_blank" class="doc-link"><i class="fas fa-external-link-alt"></i> Intranet</a></td></tr>
+            <tr><td>4</td><td><strong>Hướng dẫn nghiệp vụ TTQT</strong><br/><span style="font-size:0.78rem;color:var(--gray)">Quy trình mở L/C, tiếp nhận chứng từ, thanh toán</span></td><td><span class="badge badge-blue">Nghiệp vụ</span></td><td>2024</td><td><a href="https://intranet.vietinbank.vn" target="_blank" class="doc-link"><i class="fas fa-external-link-alt"></i> Intranet</a></td></tr>
+            <tr><td>5</td><td><strong>Bảo hiểm PTI &amp; VietinBank Aviva — Sản phẩm DN</strong><br/><span style="font-size:0.78rem;color:var(--gray)">Danh sách sản phẩm bảo hiểm, biểu phí, hoa hồng</span></td><td><span class="badge badge-green">Bảo hiểm</span></td><td>Q4/2024</td><td><a href="https://intranet.vietinbank.vn" target="_blank" class="doc-link"><i class="fas fa-external-link-alt"></i> Intranet</a></td></tr>
+          </tbody>
+        </table>
+        <!-- CROSS-SELL -->
+        <div class="mini-header" style="margin-top:36px">
+          <div class="mini-header-icon" style="background:#f0fdf4"><i class="fas fa-arrows-cross" style="color:#15803d"></i></div>
+          <div><h3>Gợi ý Cross-sell Thu ngoài lãi theo loại khách hàng</h3><p>Định hướng sản phẩm ưu tiên tư vấn đi kèm với tín dụng</p></div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px">
+          <div style="background:white;border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><div style="width:28px;height:28px;background:#fde8ef;border-radius:7px;display:flex;align-items:center;justify-content:center"><i class="fas fa-industry" style="color:var(--red);font-size:0.75rem"></i></div><span style="font-size:0.82rem;font-weight:700;color:var(--blue-dark)">DN Sản xuất / XNK</span></div>
+            <div style="display:flex;flex-direction:column;gap:5px">
+              <div style="display:flex;align-items:center;gap:7px;font-size:0.8rem;color:#374151;padding:5px 0;border-bottom:1px solid #f3f4f6"><i class="fas fa-check" style="color:#16a34a;flex-shrink:0;font-size:0.7rem"></i> L/C, TTR, nhờ thu XNK</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:0.8rem;color:#374151;padding:5px 0;border-bottom:1px solid #f3f4f6"><i class="fas fa-check" style="color:#16a34a;flex-shrink:0;font-size:0.7rem"></i> Mua bán, kỳ hạn ngoại tệ</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:0.8rem;color:#374151;padding:5px 0;border-bottom:1px solid #f3f4f6"><i class="fas fa-check" style="color:#16a34a;flex-shrink:0;font-size:0.7rem"></i> eFAST + iPay Business</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:0.8rem;color:#374151;padding:5px 0"><i class="fas fa-check" style="color:#16a34a;flex-shrink:0;font-size:0.7rem"></i> Bảo hiểm tài sản nhà xưởng</div>
+            </div>
+          </div>
+          <div style="background:white;border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><div style="width:28px;height:28px;background:#fde8ef;border-radius:7px;display:flex;align-items:center;justify-content:center"><i class="fas fa-store" style="color:var(--red);font-size:0.75rem"></i></div><span style="font-size:0.82rem;font-weight:700;color:var(--blue-dark)">Chuỗi Bán lẻ / F&amp;B</span></div>
+            <div style="display:flex;flex-direction:column;gap:5px">
+              <div style="display:flex;align-items:center;gap:7px;font-size:0.8rem;color:#374151;padding:5px 0;border-bottom:1px solid #f3f4f6"><i class="fas fa-check" style="color:#16a34a;flex-shrink:0;font-size:0.7rem"></i> POS / QR VietQR tại điểm bán</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:0.8rem;color:#374151;padding:5px 0;border-bottom:1px solid #f3f4f6"><i class="fas fa-check" style="color:#16a34a;flex-shrink:0;font-size:0.7rem"></i> Thẻ tín dụng doanh nghiệp</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:0.8rem;color:#374151;padding:5px 0;border-bottom:1px solid #f3f4f6"><i class="fas fa-check" style="color:#16a34a;flex-shrink:0;font-size:0.7rem"></i> Payroll chi lương nhân viên</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:0.8rem;color:#374151;padding:5px 0"><i class="fas fa-check" style="color:#16a34a;flex-shrink:0;font-size:0.7rem"></i> Bảo hiểm nhân thọ nhóm</div>
+            </div>
+          </div>
+          <div style="background:white;border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><div style="width:28px;height:28px;background:#fde8ef;border-radius:7px;display:flex;align-items:center;justify-content:center"><i class="fas fa-hospital" style="color:var(--red);font-size:0.75rem"></i></div><span style="font-size:0.82rem;font-weight:700;color:var(--blue-dark)">Bệnh viện / Trường học</span></div>
+            <div style="display:flex;flex-direction:column;gap:5px">
+              <div style="display:flex;align-items:center;gap:7px;font-size:0.8rem;color:#374151;padding:5px 0;border-bottom:1px solid #f3f4f6"><i class="fas fa-check" style="color:#16a34a;flex-shrink:0;font-size:0.7rem"></i> Y3 Thu hộ viện phí / học phí</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:0.8rem;color:#374151;padding:5px 0;border-bottom:1px solid #f3f4f6"><i class="fas fa-check" style="color:#16a34a;flex-shrink:0;font-size:0.7rem"></i> eFAST quản lý TK tập trung</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:0.8rem;color:#374151;padding:5px 0;border-bottom:1px solid #f3f4f6"><i class="fas fa-check" style="color:#16a34a;flex-shrink:0;font-size:0.7rem"></i> Payroll chi lương nhân viên y tế</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:0.8rem;color:#374151;padding:5px 0"><i class="fas fa-check" style="color:#16a34a;flex-shrink:0;font-size:0.7rem"></i> Bảo hiểm nhóm toàn thể cán bộ</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-banner">
+      <h2>Cần hỗ trợ thêm thông tin?</h2>
+      <p>Liên hệ Ban KHDN VVN Trụ sở chính hoặc đầu mối sản phẩm phụ trách Chi nhánh</p>
+      <div class="cta-buttons">
+        <a href="https://intranet.vietinbank.vn/khdn" target="_blank" class="btn-primary"><i class="fas fa-external-link-alt"></i> Truy cập Intranet KHDN</a>
+        <button class="btn-outline-white" onclick="showPanel('y3');showY3('contact')"><i class="fas fa-headset"></i> Danh sách cán bộ phụ trách</button>
+      </div>
+    </div>
+    <footer><strong><i class="fas fa-building-columns"></i> VietinBank</strong> — Ngân hàng TMCP Công Thương Việt Nam<p>Tài liệu nội bộ · Ban KHDN VVN · Cập nhật 05/2026 · Không phát tán ra ngoài</p></footer>
+  </main>
+</div>
+<!-- ADMIN MODAL -->
+<div class="modal-overlay" id="adminModal">
+  <div class="modal">
+    <h3><i class="fas fa-lock" style="color:var(--red);margin-right:8px"></i>Đăng nhập Admin</h3>
+    <p>Nhập mật khẩu để chỉnh sửa nội dung trực tiếp trên trang</p>
+    <input type="password" id="adminPwd" placeholder="Nhập mật khẩu..." onkeydown="if(event.key==='Enter')doLogin()" />
+    <div class="modal-error" id="loginErr">Mật khẩu không đúng. Vui lòng thử lại.</div>
+    <div class="modal-btns"><button class="btn-cancel" onclick="closeAdminModal()">Hủy</button><button class="btn-login" onclick="doLogin()">Đăng nhập</button></div>
+  </div>
+</div>
+<!-- ADMIN BAR -->
+<div class="admin-bar" id="adminBar"><i class="fas fa-pen-to-square"></i><span>Chế độ Admin — Click vào nội dung để chỉnh sửa</span><button class="btn-save-admin" onclick="saveAdmin()"><i class="fas fa-floppy-disk"></i> Lưu</button><button class="btn-logout-admin" onclick="logoutAdmin()">Đăng xuất</button></div>
+<!-- TOAST -->
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMsg">Đã lưu thay đổi!</span></div>
+
+<script>
+// === MOBILE SIDEBAR ===
+function toggleSidebar(){
+  const sb=document.getElementById('hamburgerIcon');
+  const sidebar=document.querySelector('.sidebar');
+  const backdrop=document.getElementById('sidebarBackdrop');
+  const open=sidebar.classList.toggle('open');
+  backdrop.classList.toggle('visible', open);
+  setTimeout(()=>backdrop.classList.toggle('show', open), open?10:0);
+  if(!open) setTimeout(()=>backdrop.classList.remove('visible'),310);
+  sb.className = open ? 'fas fa-times' : 'fas fa-bars';
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+function closeSidebar(){
+  const sidebar=document.querySelector('.sidebar');
+  const backdrop=document.getElementById('sidebarBackdrop');
+  if(!sidebar.classList.contains('open')) return;
+  sidebar.classList.remove('open');
+  backdrop.classList.remove('show');
+  setTimeout(()=>backdrop.classList.remove('visible'),310);
+  document.getElementById('hamburgerIcon').className='fas fa-bars';
+  document.body.style.overflow='';
+}
+// Close sidebar on resize to desktop
+window.addEventListener('resize',()=>{ if(window.innerWidth>900) closeSidebar(); });
+
+// === PANEL NAVIGATION ===
+const allPanels=['home','td-spdv','td-cs','y3','connect34','nv-cs','tnl-spdv','tnl-cs'];
+const allNavItems=['home','td-spdv','td-cs','y3','connect34','nv-cs','tnl-spdv','tnl-cs'];
+function showPanel(id){
+  allPanels.forEach(p=>{const el=document.getElementById('panel-'+p);if(el){el.classList.remove('active');}});
+  allNavItems.forEach(n=>{const el=document.getElementById('nav-'+n);if(el)el.classList.remove('active');});
+  const panel=document.getElementById('panel-'+id);
+  if(panel)panel.classList.add('active');
+  const nav=document.getElementById('nav-'+id);
+  if(nav)nav.classList.add('active');
+  // Scroll content panel to top
+  const cp=document.querySelector('.content-panel');
+  if(cp)cp.scrollTop=0;
+  // Close sidebar on mobile after navigation
+  if(window.innerWidth<=900) closeSidebar();
+}
+// === SIDEBAR GROUP TOGGLE ===
+function toggleGroup(id){
+  const grp=document.getElementById('grp-'+id);
+  if(grp)grp.classList.toggle('open');
+}
+// === Y3 SUB-NAV ===
+const y3Panels=['solution','customers','docs','contact','faq'];
+function showY3(id){
+  y3Panels.forEach(p=>{
+    const el=document.getElementById('y3-panel-'+p);if(el)el.classList.remove('active');
+    const btn=document.getElementById('y3-btn-'+p);if(btn)btn.classList.remove('active');
+  });
+  const el=document.getElementById('y3-panel-'+id);if(el)el.classList.add('active');
+  const btn=document.getElementById('y3-btn-'+id);if(btn)btn.classList.add('active');
+  // Scroll Y3 panel into view on mobile
+  if(window.innerWidth<=900){
+    const cp=document.querySelector('.content-panel');
+    if(cp)cp.scrollTo({top:0,behavior:'smooth'});
+  }
+}
+// === FAQ TOGGLE ===
+function toggleFaq(btn){
+  const answer=btn.nextElementSibling;
+  const isOpen=btn.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.faq-question.open').forEach(q=>{q.classList.remove('open');q.nextElementSibling.classList.remove('open');});
+  if(!isOpen){btn.classList.add('open');answer.classList.add('open');}
+}
+// === STAFF FILTER (Y3) ===
+function filterY3Staff(){
+  const q=document.getElementById('y3StaffSearch').value.toLowerCase();
+  const kv=document.getElementById('y3KvFilter').value;
+  const rows=document.querySelectorAll('#y3StaffTbody tr');
+  let count=0;
+  rows.forEach(r=>{
+    const s=r.dataset.search||'';
+    const rKv=r.dataset.kv||'';
+    const matchQ=!q||s.includes(q);
+    const matchKv=!kv||rKv===kv;
+    if(matchQ&&matchKv){r.classList.remove('hidden');count++;}
+    else r.classList.add('hidden');
+  });
+  document.getElementById('y3StaffCount').textContent=count+' chi nhánh hiển thị';
+}
+// === ADMIN ===
+const ADMIN_PWD='VietinBank@2026';
+let isAdmin=false;
+function openAdminModal(){if(isAdmin){logoutAdmin();return;}document.getElementById('adminModal').classList.add('show');setTimeout(()=>document.getElementById('adminPwd').focus(),100);}
+function closeAdminModal(){document.getElementById('adminModal').classList.remove('show');document.getElementById('adminPwd').value='';document.getElementById('loginErr').style.display='none';}
+function doLogin(){
+  const pwd=document.getElementById('adminPwd').value;
+  if(pwd===ADMIN_PWD){
+    isAdmin=true;closeAdminModal();
+    document.getElementById('adminBtn').classList.add('active');
+    document.getElementById('adminBtn').innerHTML='<i class="fas fa-lock-open"></i> Admin';
+    document.getElementById('adminBar').classList.add('show');
+    document.getElementById('adminLabel').style.display='inline-flex';
+    // Make editables
+    document.querySelectorAll('[id$="-desc"],[id$="-title"],[id$="-main-title"],[id$="-main-desc"],[id^="hero"],[id^="home"],[id^="y3-hero"],[id^="y3-s1"],[id^="c34"],[id^="td-"],[id^="tnl-"]').forEach(el=>{el.contentEditable='true';});
+  } else {
+    document.getElementById('loginErr').style.display='block';
+    document.getElementById('adminPwd').value='';
+    document.getElementById('adminPwd').focus();
+  }
+}
+function logoutAdmin(){
+  isAdmin=false;
+  document.getElementById('adminBtn').classList.remove('active');
+  document.getElementById('adminBtn').innerHTML='<i class="fas fa-lock"></i> Admin';
+  document.getElementById('adminBar').classList.remove('show');
+  document.getElementById('adminLabel').style.display='none';
+  document.querySelectorAll('[contenteditable]').forEach(el=>{el.removeAttribute('contenteditable');});
+}
+function saveAdmin(){showToast('Đã lưu thay đổi! Nội dung được cập nhật.');} 
+function showToast(msg){
+  const t=document.getElementById('toast');
+  document.getElementById('toastMsg').textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+</script>
+<!-- ============================================================ -->
+<!-- ==================  CHATBOT SME ONE  ====================== -->
+<!-- ============================================================ -->
+<style>
+/* ===== CHATBOT BUBBLE ===== */
+.chat-bubble {
+  position: fixed; bottom: 28px; right: 28px; z-index: 4000;
+  width: 58px; height: 58px;
+  background: linear-gradient(135deg, var(--red), var(--red-dark));
+  border-radius: 50%; border: none; cursor: pointer;
+  box-shadow: 0 6px 24px rgba(215,18,73,0.45);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.25s, box-shadow 0.25s;
+  color: white; font-size: 1.3rem;
+}
+.chat-bubble:hover { transform: scale(1.1); box-shadow: 0 8px 32px rgba(215,18,73,0.55); }
+.chat-bubble .chat-notif {
+  position: absolute; top: 2px; right: 2px;
+  width: 16px; height: 16px; background: var(--gold);
+  border-radius: 50%; border: 2px solid white;
+  font-size: 0.55rem; color: white; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.2s;
+}
+/* ===== CHAT WINDOW ===== */
+.chat-window {
+  position: fixed; bottom: 100px; right: 28px; z-index: 4000;
+  width: 585px;
+  background: white; border-radius: 20px;
+  box-shadow: 0 12px 48px rgba(0,0,0,0.18);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  transform: scale(0.9) translateY(20px); opacity: 0;
+  pointer-events: none;
+  transition: transform 0.3s cubic-bezier(.34,1.56,.64,1), opacity 0.25s;
+  max-height: min(960px, 90vh);
+}
+.chat-window.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
+/* Header */
+.chat-header {
+  background: linear-gradient(135deg, var(--blue-dark), var(--blue-mid));
+  padding: 16px 18px; display: flex; align-items: center; gap: 12px;
+  flex-shrink: 0;
+}
+.chat-header-avatar {
+  width: 38px; height: 38px; background: rgba(255,255,255,0.15);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; color: white; flex-shrink: 0;
+}
+.chat-header-info strong { display: block; color: white; font-size: 0.9rem; font-weight: 700; }
+.chat-header-info span { color: rgba(255,255,255,0.7); font-size: 0.72rem; }
+.chat-header-actions { margin-left: auto; display: flex; gap: 6px; }
+.chat-header-btn {
+  width: 30px; height: 30px; background: rgba(255,255,255,0.12);
+  border: none; border-radius: 8px; color: rgba(255,255,255,0.85);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 0.82rem; transition: background 0.2s;
+}
+.chat-header-btn:hover { background: rgba(255,255,255,0.22); }
+/* Messages area */
+.chat-messages {
+  flex: 1; overflow-y: auto; padding: 16px 14px;
+  display: flex; flex-direction: column; gap: 12px;
+  min-height: 400px; max-height: 520px;
+  background: #f8f9fb;
+  scroll-behavior: smooth;
+}
+.chat-messages::-webkit-scrollbar { width: 4px; }
+.chat-messages::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+/* Message bubbles */
+.msg { display: flex; align-items: flex-end; gap: 8px; animation: msgIn 0.25s ease; }
+@keyframes msgIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+.msg.bot { flex-direction: row; }
+.msg.user { flex-direction: row-reverse; }
+.msg-avatar {
+  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 0.72rem;
+}
+.msg.bot .msg-avatar { background: linear-gradient(135deg,var(--blue-dark),var(--blue-mid)); color: white; }
+.msg.user .msg-avatar { background: linear-gradient(135deg,var(--red),var(--red-dark)); color: white; }
+.msg-bubble {
+  max-width: 78%; padding: 10px 14px; border-radius: 14px;
+  font-size: 0.84rem; line-height: 1.6; word-break: break-word;
+}
+.msg.bot .msg-bubble { background: white; color: #1f2937; border-bottom-left-radius: 4px; box-shadow: 0 1px 6px rgba(0,0,0,0.06); }
+.msg.user .msg-bubble { background: linear-gradient(135deg,var(--red),var(--red-dark)); color: white; border-bottom-right-radius: 4px; }
+.msg-bubble a { color: var(--blue-mid); text-decoration: underline; font-size: 0.82rem; }
+.msg.user .msg-bubble a { color: rgba(255,255,255,0.9); }
+.msg-bubble ul { padding-left: 14px; margin-top: 6px; }
+.msg-bubble li { margin-bottom: 3px; font-size: 0.82rem; }
+.msg-bubble strong { font-weight: 700; }
+/* Typing indicator */
+.typing-indicator { display: flex; align-items: center; gap: 4px; padding: 8px 12px; }
+.typing-dot { width: 7px; height: 7px; background: #9ca3af; border-radius: 50%; animation: typingAnim 1.2s infinite ease-in-out; }
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typingAnim { 0%,80%,100%{transform:scale(0.7);opacity:0.5} 40%{transform:scale(1);opacity:1} }
+/* Quick replies */
+.quick-replies {
+  padding: 8px 14px; display: flex; flex-wrap: wrap; gap: 6px;
+  background: white; border-top: 1px solid #f3f4f6; flex-shrink: 0;
+  -webkit-overflow-scrolling: touch;
+}
+@media (max-width:600px){
+  .quick-replies { flex-wrap: nowrap; overflow-x: auto; scrollbar-width:none; padding: 8px 12px; }
+  .quick-replies::-webkit-scrollbar { display:none; }
+  .qr-btn { flex-shrink:0; }
+  .qr-label { display:none; }
+}
+.qr-btn {
+  padding: 5px 12px; border: 1.5px solid var(--blue-mid);
+  background: white; border-radius: 100px;
+  font-family: inherit; font-size: 0.75rem; font-weight:600;
+  color: var(--blue-dark); cursor: pointer; transition: all 0.2s;
+  white-space: nowrap;
+}
+.qr-btn:hover { background: var(--blue-pale); }
+.qr-label { font-size: 0.68rem; color: var(--gray); width: 100%; margin-bottom: 2px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; }
+/* Input */
+.chat-input-area {
+  padding: 12px 14px; border-top: 1px solid #e5e7eb;
+  display: flex; gap: 8px; align-items: flex-end; flex-shrink: 0;
+  background: white;
+}
+.chat-input {
+  flex: 1; border: 1.5px solid #e5e7eb; border-radius: 12px;
+  padding: 9px 14px; font-family: inherit; font-size: 0.85rem;
+  outline: none; resize: none; min-height: 38px; max-height: 90px;
+  transition: border-color 0.2s; line-height: 1.5; color: #1f2937;
+}
+.chat-input:focus { border-color: var(--blue-mid); }
+.chat-send-btn {
+  width: 38px; height: 38px; background: var(--red); border: none;
+  border-radius: 11px; cursor: pointer; color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem; transition: background 0.2s; flex-shrink: 0;
+}
+.chat-send-btn:hover { background: var(--red-dark); }
+/* Tab: Admin Q&A Manager */
+.chat-admin-panel {
+  display: none; flex-direction: column; flex: 1; overflow: hidden;
+}
+.chat-admin-panel.active { display: flex; }
+.chat-messages-panel { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+.chat-messages-panel.hidden { display: none; }
+.chat-tabs { display: flex; background: #f8f9fb; border-bottom: 1px solid #e5e7eb; flex-shrink: 0; }
+.chat-tab { flex: 1; padding: 10px; background: none; border: none; font-family: inherit; font-size: 0.78rem; font-weight: 600; color: var(--gray); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; }
+.chat-tab.active { color: var(--blue-dark); border-bottom-color: var(--blue-dark); background: white; }
+/* Admin Q&A list */
+.admin-qa-wrap { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 8px; max-height: 640px; }
+.admin-qa-item { background: white; border: 1px solid #e5e7eb; border-radius: 10px; padding: 10px 12px; }
+.admin-qa-q { font-size: 0.8rem; font-weight: 700; color: var(--blue-dark); margin-bottom: 4px; display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.admin-qa-a { font-size: 0.78rem; color: #4b5563; line-height: 1.5; }
+.admin-qa-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+.admin-qa-tag { background: var(--blue-pale); color: var(--blue-dark); font-size: 0.65rem; font-weight: 600; padding: 2px 7px; border-radius: 100px; }
+.admin-del-btn { background: #fee2e2; border: none; color: #dc2626; border-radius: 6px; padding: 3px 8px; font-size: 0.7rem; cursor: pointer; flex-shrink: 0; }
+.admin-del-btn:hover { background: #dc2626; color: white; }
+/* Add Q&A form */
+.admin-add-form { padding: 12px; border-top: 1px solid #e5e7eb; background: #f9fafb; flex-shrink: 0; }
+.admin-add-form textarea, .admin-add-form input { width: 100%; border: 1.5px solid #e5e7eb; border-radius: 8px; padding: 8px 10px; font-family: inherit; font-size: 0.8rem; margin-bottom: 6px; outline: none; resize: none; }
+.admin-add-form textarea:focus, .admin-add-form input:focus { border-color: var(--blue-mid); }
+.admin-add-btns { display: flex; gap: 8px; }
+.admin-save-qa-btn { flex: 2; background: var(--blue-dark); color: white; border: none; border-radius: 8px; padding: 8px; font-family: inherit; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
+.admin-save-qa-btn:hover { background: var(--blue-mid); }
+.admin-clear-btn { flex: 1; background: #f3f4f6; color: var(--gray); border: none; border-radius: 8px; padding: 8px; font-family: inherit; font-size: 0.8rem; cursor: pointer; }
+/* Search bar in chat */
+.chat-search-bar { padding: 8px 12px; border-bottom: 1px solid #f3f4f6; background: white; flex-shrink: 0; position: relative; }
+.chat-search-bar i { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--gray); font-size: 0.78rem; }
+.chat-search-bar input { width: 100%; border: 1px solid #e5e7eb; border-radius: 8px; padding: 6px 10px 6px 28px; font-family: inherit; font-size: 0.78rem; outline: none; background: #f8f9fb; }
+/* Responsive */
+@media (max-width: 660px) { .chat-window { width: calc(100vw - 20px); right: 10px; } .chat-bubble { right: 16px; bottom: 16px; } }
+</style>
+
+<!-- ===== CHAT BUBBLE ===== -->
+<button class="chat-bubble" id="chatBubble" onclick="toggleChat()" title="Trợ lý SME ONE">
+  <i class="fas fa-comments" id="chatBubbleIcon"></i>
+  <span class="chat-notif" id="chatNotif">1</span>
+</button>
+
+<!-- ===== CHAT WINDOW ===== -->
+<div class="chat-window" id="chatWindow">
+  <!-- Header -->
+  <div class="chat-header">
+    <div class="chat-header-avatar"><i class="fas fa-robot"></i></div>
+    <div class="chat-header-info">
+      <strong>Trợ lý SME ONE</strong>
+      <span><span style="display:inline-block;width:7px;height:7px;background:#4ade80;border-radius:50%;margin-right:4px"></span>Sẵn sàng hỗ trợ</span>
+    </div>
+    <div class="chat-header-actions">
+      <button class="chat-header-btn" id="chatAdminToggle" title="Quản lý Q&A (Admin)" onclick="toggleChatAdmin()" style="display:none"><i class="fas fa-sliders"></i></button>
+      <button class="chat-header-btn" onclick="clearChat()" title="Xóa lịch sử trò chuyện"><i class="fas fa-rotate-left"></i></button>
+      <button class="chat-header-btn" onclick="toggleChat()" title="Đóng"><i class="fas fa-times"></i></button>
+    </div>
+  </div>
+  <!-- Tabs (shown only in admin mode) -->
+  <div class="chat-tabs" id="chatTabs" style="display:none">
+    <button class="chat-tab active" id="tab-chat" onclick="switchChatTab('chat')"><i class="fas fa-comments"></i> Trò chuyện</button>
+    <button class="chat-tab" id="tab-admin" onclick="switchChatTab('admin')"><i class="fas fa-database"></i> Quản lý Q&A</button>
+  </div>
+  <!-- Chat Panel -->
+  <div class="chat-messages-panel" id="chatMsgsPanel">
+    <div class="chat-messages" id="chatMessages"></div>
+    <!-- Quick replies -->
+    <div class="quick-replies" id="quickReplies">
+      <div class="qr-label"><i class="fas fa-bolt" style="color:var(--gold)"></i> Câu hỏi nhanh</div>
+      <button class="qr-btn" onclick="sendQuick('Lãi suất cho vay SME hiện tại là bao nhiêu?')">Lãi suất vay</button>
+      <button class="qr-btn" onclick="sendQuick('Y3 là gì?')">Y3 là gì?</button>
+      <button class="qr-btn" onclick="sendQuick('Connect 34 gồm những đối tác nào?')">Connect 34</button>
+      <button class="qr-btn" onclick="sendQuick('Phí dịch vụ eFAST như thế nào?')">Phí eFAST</button>
+      <button class="qr-btn" onclick="sendQuick('Điều kiện vay vốn lưu động là gì?')">Điều kiện vay</button>
+      <button class="qr-btn" onclick="sendQuick('Bảo lãnh ngân hàng VietinBank')">Bảo lãnh</button>
+    </div>
+    <!-- Input -->
+    <div class="chat-input-area">
+      <textarea class="chat-input" id="chatInput" placeholder="Nhập câu hỏi về sản phẩm dịch vụ..." rows="1"
+        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMessage();}"
+        oninput="autoResize(this)"></textarea>
+      <button class="chat-send-btn" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+  <!-- Admin Q&A Panel -->
+  <div class="chat-admin-panel" id="chatAdminPanel">
+    <div class="chat-search-bar">
+      <i class="fas fa-magnifying-glass"></i>
+      <input type="text" id="qaSearchInput" placeholder="Tìm kiếm câu hỏi..." oninput="renderQAList()" />
+    </div>
+    <div class="admin-qa-wrap" id="adminQaList"></div>
+    <div class="admin-add-form">
+      <div style="font-size:0.75rem;font-weight:700;color:var(--blue-dark);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.4px"><i class="fas fa-plus" style="color:var(--red)"></i> Thêm câu hỏi mới</div>
+      <input type="text" id="newQaQuestion" placeholder="Câu hỏi (hoặc các từ khóa, cách nhau bởi | ví dụ: lãi suất|lãi vay|ls cho vay)" />
+      <textarea id="newQaAnswer" rows="3" placeholder="Câu trả lời (hỗ trợ HTML: <strong>, <ul><li>, <a href='...'>)"></textarea>
+      <input type="text" id="newQaTags" placeholder="Nhãn phân loại (ví dụ: tín dụng, lãi suất)" />
+      <div class="admin-add-btns">
+        <button class="admin-clear-btn" onclick="clearAddForm()">Xóa</button>
+        <button class="admin-save-qa-btn" onclick="addQA()"><i class="fas fa-floppy-disk"></i> Lưu câu hỏi</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// =============================================================
+// ==================  CHATBOT ENGINE  ========================
+// =============================================================
+
+// ---- Q&A DATABASE ----
+// Mỗi entry: { id, q: ['keyword1','keyword2',...], a: 'HTML answer', tags: ['tag'] }
+let QA_DB = [
+  // ========== TÍN DỤNG ==========
+  {id:1, q:['cho vay vốn lưu động','vay vlđ','vay ngắn hạn','bổ sung vốn','vay vốn kinh doanh'],
+   a:`<strong>Cho vay bổ sung Vốn lưu động</strong><br/>Sản phẩm cho vay ngắn hạn giúp DN bổ sung vốn mua nguyên vật liệu, hàng hóa, trả lương.<br/><ul><li>Kỳ hạn: 3 – 12 tháng (tuần hoàn hoặc từng lần)</li><li>Tài sản bảo đảm: khoản phải thu, HTK, BĐS</li><li>Giải ngân linh hoạt theo nhu cầu thực tế</li></ul>Liên hệ RM phụ trách để được tư vấn hạn mức cụ thể.`, tags:['tín dụng','cho vay']},
+
+  {id:2, q:['lãi suất','lãi vay','ls cho vay','lãi suất vay','lãi suất hiện tại','lãi suất smf'],
+   a:`<strong>Lãi suất cho vay SME</strong><br/>Lãi suất được tính theo cơ chế: <strong>FTP + biên độ</strong> hoặc lãi suất cố định theo gói ưu đãi.<br/><ul><li>Lãi suất cụ thể cập nhật trên <a href="https://intranet.vietinbank.vn" target="_blank">Intranet VietinBank</a> theo tuần</li><li>Gói ưu đãi đặc biệt cho DN trong Connect 34 hoặc tín dụng xanh</li><li>RM tra hệ thống nội bộ trước khi báo cho KH</li></ul>⚠️ Không báo lãi suất ước tính — luôn xác nhận lãi suất mới nhất trước khi tư vấn.`, tags:['tín dụng','lãi suất']},
+
+  {id:3, q:['điều kiện vay','hồ sơ vay','thủ tục vay','tài sản bảo đảm','tsđb','tài sản thế chấp'],
+   a:`<strong>Điều kiện vay vốn KHDN VVN</strong><br/><ul><li><strong>Pháp lý:</strong> Đăng ký kinh doanh hợp lệ, hoạt động ≥ 6 tháng</li><li><strong>Tài chính:</strong> BCTC 2 năm gần nhất, không lỗ lũy kế</li><li><strong>TSĐB:</strong> BĐS (tỷ lệ 65-75%), máy móc (50-60%), khoản phải thu (60-70%)</li><li><strong>Tín chấp:</strong> Áp dụng cho KH xếp hạng A/B với lịch sử giao dịch tốt</li></ul>`, tags:['tín dụng','điều kiện']},
+
+  {id:4, q:['bảo lãnh','bảo lãnh dự thầu','bảo lãnh thực hiện','bảo lãnh ngân hàng','phát hành bảo lãnh'],
+   a:`<strong>Bảo lãnh Ngân hàng VietinBank</strong><br/>VietinBank phát hành các loại bảo lãnh:<br/><ul><li><strong>Bảo lãnh Dự thầu:</strong> Đảm bảo nghĩa vụ tham dự thầu</li><li><strong>Bảo lãnh Thực hiện HĐ:</strong> Đảm bảo nhà thầu thực hiện đúng cam kết</li><li><strong>Bảo lãnh Thanh toán:</strong> Đảm bảo nghĩa vụ thanh toán</li><li><strong>Bảo lãnh Tiền ứng trước:</strong> Đảm bảo hoàn trả ứng trước</li><li><strong>Bảo lãnh Bảo hành:</strong> Sau khi bàn giao công trình</li></ul>Phí bảo lãnh theo biểu phí hiện hành. Phát hành nhanh trong 1-2 ngày làm việc.`, tags:['tín dụng','bảo lãnh']},
+
+  {id:5, q:['tín dụng xanh','green finance','điện mặt trời','năng lượng tái tạo','vay xanh'],
+   a:`<strong>Tín dụng Xanh — Green Finance</strong><br/>Ưu đãi đặc biệt cho DN đầu tư vào dự án thân thiện môi trường:<br/><ul><li>Điện mặt trời áp mái, điện gió</li><li>Hệ thống tiết kiệm năng lượng, xử lý chất thải</li><li><strong>Lãi suất ưu đãi</strong> thấp hơn vay thông thường 0.5-1%/năm</li><li>Hỗ trợ từ chương trình tái cấp vốn NHNN</li><li>Kỳ hạn dài tối đa 15 năm</li></ul>Yêu cầu: Dự án có chứng nhận ESG/môi trường hoặc thuộc danh mục NHNN quy định.`, tags:['tín dụng','tín dụng xanh']},
+
+  {id:6, q:['thấu chi','overdraft','thấu chi tài khoản','vượt số dư'],
+   a:`<strong>Thấu chi Tài khoản Thanh toán</strong><br/>Tự động kích hoạt khi tài khoản không đủ số dư chi trả.<br/><ul><li>Hạn mức thấu chi theo chính sách từng thời kỳ</li><li>Lãi tính trên số dư thấu chi thực tế sử dụng</li><li>Kết hợp với tài khoản VietinBank eFAST</li><li>Phù hợp DN có dòng tiền biến động ngắn hạn</li></ul>`, tags:['tín dụng','thấu chi']},
+
+  {id:7, q:['tài trợ nhập khẩu','lc nhập','l/c','thư tín dụng','lc xuất khẩu','tài trợ thương mại','ttqt'],
+   a:`<strong>Thanh toán Quốc tế (TTQT)</strong><br/>VietinBank là ngân hàng hàng đầu về TTQT với mạng lưới đại lý toàn cầu:<br/><ul><li><strong>L/C Nhập khẩu:</strong> Sight, Usance, UPAS, Back-to-Back</li><li><strong>L/C Xuất khẩu:</strong> Thông báo + Chiết khấu chứng từ (miễn/có truy đòi)</li><li><strong>Chuyển tiền TTR:</strong> SWIFT nhanh, phí thấp</li><li><strong>Nhờ thu D/P, D/A:</strong> Documents against Payment/Acceptance</li><li><strong>Bao thanh toán:</strong> Factoring xuất khẩu</li></ul>`, tags:['thu ngoài lãi','ttqt']},
+
+  // ========== Y3 ==========
+  {id:8, q:['y3 là gì','y3','sáng kiến y3','y3 vietinbank'],
+   a:`<strong>Sáng kiến Y3 — Thanh toán & Quản lý Dòng tiền</strong><br/>Y3 là định hướng chiến lược của VietinBank nhằm:<br/><ul><li>Tăng tỷ lệ giao dịch <strong>không dùng tiền mặt</strong></li><li>Nâng cao <strong>CASA</strong> từ khách hàng doanh nghiệp</li><li>Cung cấp bộ giải pháp tích hợp: Thu hộ, Chi hộ, CMS, QR/POS, API kết nối ERP</li></ul>Bấm vào mục <strong>Nguồn vốn → Y3</strong> trên sidebar để xem chi tiết đầy đủ.`, tags:['y3','nguồn vốn']},
+
+  {id:9, q:['thu hộ','collection','giải pháp thu hộ','thu tiền tự động','thu học phí','thu viện phí'],
+   a:`<strong>Giải pháp Thu hộ Y3</strong><br/>Tự động hóa việc thu tiền từ nhiều đại lý/điểm thu:<br/><ul><li>Thu hộ đa kênh: QR VietQR, chuyển khoản định danh, POS</li><li>Phân bổ tự động về TK tập trung</li><li>Đối soát tức thì, báo cáo real-time theo điểm thu</li><li>Hỗ trợ: thu viện phí, học phí, COD logistics, phí dịch vụ</li></ul>Phần mềm đã tích hợp sẵn: FPT, VNPT HIS (bệnh viện); MISA, ASC (trường học).`, tags:['y3','thu hộ']},
+
+  {id:10, q:['chi hộ','disbursement','giải pháp chi hộ','thanh toán hàng loạt','chi lương','batch payment'],
+   a:`<strong>Giải pháp Chi hộ Y3</strong><br/>Thanh toán tự động cho nhiều người thụ hưởng cùng lúc:<br/><ul><li>Batch payment cho 10.000+ người thụ hưởng/lần</li><li>Lên lịch chi trả tự động theo ngày cố định</li><li>Phê duyệt 4-mắt (dual control) an toàn</li><li>Kiểm soát hạn mức chi theo vai trò</li><li>Kết nối HRMS, ERP, phần mềm kế toán</li></ul>`, tags:['y3','chi hộ']},
+
+  {id:11, q:['cms','cash management','quản lý dòng tiền','sweeping','pooling','notional pooling'],
+   a:`<strong>Cash Management System (CMS)</strong><br/>Bộ giải pháp tối ưu dòng tiền toàn tập đoàn:<br/><ul><li><strong>Zero Balancing:</strong> Gom tiền về TK master cuối ngày</li><li><strong>Target Balancing:</strong> Duy trì số dư mục tiêu tại TK chi nhánh</li><li><strong>Notional Pooling:</strong> Bù trừ dư nợ/số dư nội bộ, tiết kiệm lãi vay</li><li>Dashboard dòng tiền toàn tập đoàn real-time</li><li>Dự báo thanh khoản và cảnh báo chủ động</li></ul>`, tags:['y3','cms','dòng tiền']},
+
+  {id:12, q:['vac','mã định danh','tài khoản định danh','virtual account'],
+   a:`<strong>Mã Định danh Tài khoản (VAC)</strong><br/>Cấu trúc: <code>VAC + [Mã KH] + [Phòng ban] + [Nhân viên] + [Hóa đơn]</code><br/>Ví dụ: <code><strong style="color:#005993">1VTX</strong>.56200018.08.H101.A1B2357</code><br/><ul><li>Mỗi KHDN được cấp 1 mã VAC riêng biệt</li><li>Tạo QR VietQR (chuẩn NAPAS) theo từng mã</li><li>End-user quét QR từ IB bất kỳ ngân hàng</li><li>Hệ thống tự động nhận diện và phân loại nguồn thu</li></ul>`, tags:['y3','vac']},
+
+  {id:13, q:['sla y3','thời gian triển khai','bao lâu go live','go live y3','triển khai bao lâu'],
+   a:`<strong>Thời gian triển khai Y3</strong><br/><ul><li><strong>Giải pháp tiêu chuẩn (QR, Thu hộ đơn giản):</strong> 2–4 tuần</li><li><strong>Tích hợp API/ERP:</strong> 4–8 tuần (phụ thuộc CNTT của KH)</li><li><strong>CMS phức tạp (Notional Pooling):</strong> 8–12 tuần</li></ul>SLA chi tiết theo trạng thái: Open → SME Approval (1 ngày) → TKGP Review (2 ngày) → BA (2 ngày) → DEV (3 ngày) → UAT (5 ngày) → Go-live (2 ngày).`, tags:['y3','sla']},
+
+  {id:14, q:['erp','kết nối erp','tích hợp erp','api','openapi','misa','fast','sap','oracle'],
+   a:`<strong>Kết nối ERP / OpenAPI</strong><br/>VietinBank hỗ trợ kết nối với hệ thống doanh nghiệp qua REST API chuẩn ISO 20022:<br/><ul><li>Đã tích hợp sẵn: <strong>MISA, Fast Accounting, SAP, Oracle</strong></li><li>Webhook nhận thông báo giao dịch tức thì</li><li>Đối soát tự động 24/7 (sai lệch &lt;0.01%)</li><li>Có môi trường <strong>Sandbox</strong> để test trước go-live</li></ul>PM chưa có template? → Phối hợp CNTT KH kết nối theo tài liệu Techspec VietinBank.`, tags:['y3','erp','api']},
+
+  {id:15, q:['pos','qr vietqr','thanh toán bán lẻ','máy pos','qr code','payment gateway'],
+   a:`<strong>POS / QR VietQR / Cổng thanh toán</strong><br/>Giải pháp thu tiền tại điểm bán:<br/><ul><li><strong>VietQR:</strong> QR tĩnh & động, liên ngân hàng qua NAPAS</li><li><strong>POS / mPOS:</strong> Không dây, hỗ trợ contactless, NFC</li><li><strong>Payment Gateway:</strong> Tích hợp website, app thương mại</li><li>Báo cáo doanh thu real-time theo điểm bán</li></ul>Phù hợp: Chuỗi bán lẻ, F&B, bệnh viện, trường học, FMCG.`, tags:['y3','pos','qr']},
+
+  // ========== CONNECT 34 ==========
+  {id:16, q:['connect 34','connect34','hệ sinh thái đối tác','34 đối tác'],
+   a:`<strong>Chương trình Connect 34</strong><br/>Kết nối VietinBank với 34+ đối tác chiến lược trong các lĩnh vực:<br/><ul><li>🛒 Bán lẻ & FMCG (chuỗi siêu thị, NPP)</li><li>🚜 Nông nghiệp & Thực phẩm</li><li>🚛 Logistics & Vận tải</li><li>🏥 Y tế & Dược phẩm</li><li>☀️ Năng lượng tái tạo & Môi trường</li><li>💻 Công nghệ & Fintech</li></ul><strong>Lợi ích:</strong> Lãi suất ưu đãi 0.5-1%/năm, thủ tục rút gọn, giải ngân nhanh hơn 50%.`, tags:['connect34']},
+
+  {id:17, q:['supply chain finance','tài trợ chuỗi cung ứng','nhà phân phối','đại lý','npp'],
+   a:`<strong>Supply Chain Finance — Tài trợ Chuỗi cung ứng</strong><br/>Giải pháp tài chính cho nhà cung cấp/phân phối trong chuỗi Connect 34:<br/><ul><li>Hạn mức tín dụng dựa trên hợp đồng với đối tác lớn (anchor buyer)</li><li>Giải ngân tự động theo đơn hàng xác nhận</li><li>Không cần TSĐB riêng — dựa vào tín nhiệm chuỗi</li><li>Lãi suất ưu đãi vì rủi ro thấp hơn cho vay thông thường</li></ul>`, tags:['connect34','tín dụng']},
+
+  // ========== THU NGOÀI LÃI ==========
+  {id:18, q:['efast','internet banking doanh nghiệp','ib doanh nghiệp','vietinbank efast'],
+   a:`<strong>VietinBank eFAST — Internet Banking Doanh nghiệp</strong><br/>Nền tảng quản lý tài chính doanh nghiệp toàn diện:<br/><ul><li>Quản lý tài khoản, chuyển tiền, thanh toán</li><li>Mở L/C, thanh toán quốc tế online</li><li>Chi lương hàng loạt, lên lịch thanh toán</li><li>Phân quyền người dùng theo vai trò (4-mắt)</li><li>Kết nối API ERP doanh nghiệp</li></ul>Phí đăng ký và phí giao dịch theo biểu phí nội bộ VietinBank.`, tags:['thu ngoài lãi','efast','ngân hàng điện tử']},
+
+  {id:19, q:['ipay business','mobile banking doanh nghiệp','app doanh nghiệp'],
+   a:`<strong>VietinBank iPay Business — Mobile Banking DN</strong><br/>Ứng dụng mobile dành riêng cho chủ DN và kế toán:<br/><ul><li>Phê duyệt giao dịch nhanh từ điện thoại</li><li>Tra cứu số dư, lịch sử giao dịch real-time</li><li>Thông báo push cho mọi biến động tài khoản</li><li>Bảo mật FaceID / TouchID</li></ul>`, tags:['thu ngoài lãi','mobile banking']},
+
+  {id:20, q:['thẻ tín dụng doanh nghiệp','business card','thẻ dn','visa business','mastercard doanh nghiệp'],
+   a:`<strong>Thẻ Tín dụng Doanh nghiệp VietinBank</strong><br/>Thẻ Visa/Mastercard Business cho chi tiêu công tác:<br/><ul><li>Hạn mức riêng cho từng nhân viên/phòng ban</li><li>Kiểm soát chi phí tập trung, đối soát tự động</li><li>Thanh toán trực tuyến quốc tế</li><li>Báo cáo chi tiêu theo phòng ban/nhân viên</li><li>Không mất phí lãi nếu thanh toán đúng hạn</li></ul>`, tags:['thu ngoài lãi','thẻ']},
+
+  {id:21, q:['payroll','chi lương','thanh toán lương','lương nhân viên'],
+   a:`<strong>Dịch vụ Chi lương (Payroll)</strong><br/>Giải pháp thanh toán lương tự động cho doanh nghiệp:<br/><ul><li>Mở tài khoản lương hàng loạt cho nhân viên mới</li><li>Chi lương tự động đúng ngày quy định</li><li>Tích hợp phần mềm HRMS (SAP HCM, MISA HRM...)</li><li>Báo cáo chi lương và hỗ trợ kê khai thuế TNCN</li><li>Phù hợp: KCN, bệnh viện, trường học, chuỗi bán lẻ</li></ul>`, tags:['thu ngoài lãi','payroll']},
+
+  {id:22, q:['bảo hiểm doanh nghiệp','pti','aviva','bảo hiểm tài sản','bảo hiểm nhân thọ nhóm'],
+   a:`<strong>Bảo hiểm Doanh nghiệp VietinBank</strong><br/><ul><li><strong>PTI VietinBank:</strong> Bảo hiểm tài sản (hỏa hoạn, thiên tai, trộm cắp), bảo hiểm hàng hóa vận chuyển</li><li><strong>VietinBank Aviva:</strong> Bảo hiểm nhân thọ nhóm nhân viên, bảo hiểm khoản vay</li><li>RM nhận hoa hồng bảo hiểm — cross-sell kết hợp khi cấp tín dụng</li></ul>Liên hệ đầu mối bảo hiểm tại Chi nhánh để được hỗ trợ.`, tags:['thu ngoài lãi','bảo hiểm']},
+
+  {id:23, q:['kinh doanh ngoại tệ','kdnt','mua bán ngoại tệ','tỷ giá','usd','eur','ngoại tệ','hedging','forward'],
+   a:`<strong>Kinh doanh Ngoại tệ (KDNT)</strong><br/><ul><li><strong>Giao dịch Spot:</strong> Mua/bán ngoại tệ giao ngay với tỷ giá cạnh tranh</li><li><strong>Giao dịch Kỳ hạn (Forward):</strong> Khóa tỷ giá cho các hợp đồng thương mại tương lai</li><li><strong>FX Swap:</strong> Hoán đổi ngoại tệ phòng ngừa rủi ro</li><li><strong>FX Option:</strong> Quyền chọn mua/bán ngoại tệ</li></ul>Phù hợp: DN xuất nhập khẩu cần phòng ngừa rủi ro tỷ giá trên hợp đồng ngoại tệ lớn.`, tags:['thu ngoài lãi','ngoại tệ']},
+
+  // ========== NGUỒN VỐN ==========
+  {id:24, q:['tiền gửi','gửi tiết kiệm','tiền gửi kỳ hạn','huy động vốn','gửi tiền','casa'],
+   a:`<strong>Sản phẩm Huy động Vốn Doanh nghiệp</strong><br/><ul><li><strong>CASA (TK Thanh toán):</strong> Lãi suất không kỳ hạn, giao dịch 24/7</li><li><strong>TG Có kỳ hạn:</strong> 1 tuần đến 36 tháng, lãi suất theo biểu VietinBank</li><li><strong>TG Thông minh:</strong> Auto-sweep số dư vượt ngưỡng → lãi suất bậc thang cao</li><li><strong>TG Ngoại tệ:</strong> USD, EUR và các ngoại tệ phổ biến</li></ul>Lãi suất cập nhật: tra trên Intranet VietinBank.`, tags:['nguồn vốn','tiền gửi']},
+
+  // ========== CHUNG ==========
+  {id:25, q:['smf one là gì','sme one','giới thiệu sme one','sme one vietinbank'],
+   a:`<strong>SME ONE là gì?</strong><br/>SME ONE là cổng thông tin tổng quan dành cho cán bộ RM KHDN VVN, tổng hợp toàn bộ:<br/><ul><li>🔴 <strong>Tín dụng:</strong> Cho vay VLĐ, TDH, Bảo lãnh, Tài trợ XNK</li><li>🔵 <strong>Nguồn vốn:</strong> Y3 Thanh toán, Connect 34, Huy động tiền gửi</li><li>🟢 <strong>Thu ngoài lãi:</strong> TTQT, KDNT, Bảo hiểm, eFAST, Thẻ DN, Payroll</li></ul>Mục đích: Giúp RM nắm vững sản phẩm và tư vấn toàn diện cho KHDN VVN.`, tags:['chung']},
+
+  {id:26, q:['phân khúc khách hàng','khách hàng mục tiêu','smf','dn vừa và nhỏ','doanh nghiệp vvn'],
+   a:`<strong>Phân khúc Khách hàng KHDN VVN</strong><br/>VietinBank định nghĩa KHDN VVN theo tiêu chí quy mô:<br/><ul><li><strong>DN Nhỏ:</strong> Doanh thu &lt;100 tỷ/năm hoặc VĐL &lt;20 tỷ</li><li><strong>DN Vừa:</strong> Doanh thu 100-500 tỷ/năm</li></ul>Các phân khúc trọng tâm của Y3: Bệnh viện, Trường học, FMCG, Chuỗi bán lẻ, Logistics, DN sản xuất XNK.`, tags:['chung']},
+
+  {id:27, q:['cross sell','bán chéo','upsell','tư vấn toàn diện','gói sản phẩm'],
+   a:`<strong>Gợi ý Cross-sell theo loại KH</strong><br/><ul><li><strong>DN Sản xuất/XNK:</strong> L/C + TTR + KDNT + eFAST + Bảo hiểm hàng hóa</li><li><strong>Chuỗi Bán lẻ/F&B:</strong> Y3 Thu hộ + POS/QR + Thẻ DN + Payroll + Bảo hiểm nhóm</li><li><strong>Bệnh viện:</strong> Y3 Thu hộ viện phí + eFAST + Payroll + Bảo hiểm PTI/Aviva</li><li><strong>Trường học:</strong> Y3 Thu học phí + Chi hộ lương + eFAST + CMS</li></ul>Mỗi khoản vay nên đi kèm ít nhất <strong>2-3 dịch vụ thu ngoài lãi</strong>.`, tags:['chung','cross sell']},
+
+  {id:28, q:['contact','liên hệ','phụ trách','ai phụ trách','ban sme','đầu mối'],
+   a:`<strong>Liên hệ hỗ trợ</strong><br/><ul><li>📋 Xem <strong>danh sách cán bộ Ban SME</strong> phụ trách từng Chi nhánh tại mục <em>Nguồn vốn → Y3 → Phụ trách Chi nhánh</em></li><li>💻 Tra thông tin qua <a href="https://intranet.vietinbank.vn/khdn" target="_blank">Intranet KHDN VVN</a></li><li>📞 Liên hệ qua <strong>Microsoft Teams nội bộ</strong></li></ul>`, tags:['chung','liên hệ']},
+
+  {id:29, q:['thủ tục mở tài khoản','mở tài khoản doanh nghiệp','hồ sơ mở tài khoản','mở tk'],
+   a:`<strong>Mở Tài khoản Doanh nghiệp VietinBank</strong><br/>Hồ sơ cơ bản:<br/><ul><li>Giấy phép ĐKKD / Quyết định thành lập</li><li>Điều lệ công ty (bản mới nhất)</li><li>CMND/CCCD người đại diện pháp luật</li><li>Văn bản uỷ quyền (nếu không phải NĐDPL)</li></ul>Mở online qua <strong>eFAST</strong> hoặc trực tiếp tại quầy giao dịch. Xử lý trong 1 ngày làm việc.`, tags:['nguồn vốn','tài khoản']},
+
+  {id:30, q:['chính sách tín dụng','quy chế cho vay','phân cấp phán quyết','thẩm quyền phán quyết'],
+   a:`<strong>Chính sách Tín dụng SME</strong><br/><ul><li>Tuân thủ theo Quy chế Cho vay KHDN hiện hành của VietinBank</li><li>Phân cấp phán quyết theo quy mô khoản vay và xếp hạng tín dụng KH</li><li>Chi nhánh loại 1 có thẩm quyền phán quyết tối đa theo quy định</li></ul>Tra cứu Quy chế cho vay và biểu lãi suất tại <a href="https://intranet.vietinbank.vn/khdn" target="_blank">Intranet KHDN</a>.`, tags:['tín dụng','chính sách']},
+];
+
+// Load custom Q&A from sessionStorage (admin-added in current session)
+let customQA = [];
+try { const s = sessionStorage.getItem('sme_custom_qa'); if(s) customQA = JSON.parse(s); } catch(e){}
+function getAllQA(){ return [...QA_DB, ...customQA]; }
+
+// ---- CHATBOT STATE ----
+let chatOpen = false;
+let chatAdminMode = false;
+let currentTab = 'chat';
+let chatHistory = [];
+let hasGreeted = false;
+
+// ---- TOGGLE CHAT ----
+function toggleChat(){
+  chatOpen = !chatOpen;
+  const win = document.getElementById('chatWindow');
+  const bubbleIcon = document.getElementById('chatBubbleIcon');
+  const notif = document.getElementById('chatNotif');
+  if(chatOpen){
+    win.classList.add('open');
+    bubbleIcon.className = 'fas fa-times';
+    notif.style.opacity = '0';
+    if(!hasGreeted){ greetUser(); hasGreeted = true; }
+    setTimeout(()=>document.getElementById('chatInput').focus(), 350);
+  } else {
+    win.classList.remove('open');
+    bubbleIcon.className = 'fas fa-comments';
+  }
+}
+
+// ---- GREETING ----
+function greetUser(){
+  const hour = new Date().getHours();
+  let greet = hour < 12 ? 'Chào buổi sáng' : hour < 18 ? 'Chào buổi chiều' : 'Chào buổi tối';
+  addBotMessage(`${greet}! 👋 Tôi là <strong>Trợ lý SME ONE</strong> — có thể hỏi tôi về:<br/><ul><li>🔴 Sản phẩm Tín dụng (lãi suất, điều kiện vay, bảo lãnh...)</li><li>🔵 Nguồn vốn (Y3, Connect 34, tiền gửi...)</li><li>🟢 Thu ngoài lãi (TTQT, KDNT, eFAST, bảo hiểm...)</li></ul>Hãy nhập câu hỏi hoặc chọn gợi ý bên dưới nhé!`);
+}
+
+// ---- SEND MESSAGE ----
+function sendMessage(){
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if(!text) return;
+  addUserMessage(text);
+  input.value = '';
+  input.style.height = 'auto';
+  showTyping();
+  setTimeout(()=>{ hideTyping(); respond(text); }, 600 + Math.random()*400);
+}
+function sendQuick(text){
+  document.getElementById('chatInput').value = text;
+  sendMessage();
+  // hide quick replies after first use
+  document.getElementById('quickReplies').style.display = 'none';
+}
+
+// ---- RESPOND ----
+function respond(text){
+  const lower = text.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+  const all = getAllQA();
+  let best = null; let bestScore = 0;
+  for(const entry of all){
+    let score = 0;
+    for(const kw of entry.q){
+      const kwNorm = kw.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+      if(lower.includes(kwNorm)) score += kwNorm.length;
+    }
+    if(score > bestScore){ bestScore = score; best = entry; }
+  }
+  if(best && bestScore >= 2){
+    addBotMessage(best.a);
+    // Suggest related questions
+    const related = all.filter(e => e.id !== best.id && e.tags.some(t=>best.tags.includes(t))).slice(0,3);
+    if(related.length > 0){
+      setTimeout(()=>{
+        addSuggestions('Câu hỏi liên quan:', related.map(r=>r.q[0]));
+      }, 400);
+    }
+  } else {
+    addBotMessage(`Tôi chưa có câu trả lời cụ thể cho "<strong>${escHtml(text)}</strong>".<br/>Bạn có thể:<ul><li>Thử lại với từ khóa khác (ví dụ: "lãi suất", "Y3", "eFAST"...)</li><li>Xem chi tiết trong menu bên trái</li><li>Liên hệ <strong>cán bộ Ban SME</strong> phụ trách Chi nhánh (mục Y3 → Phụ trách)</li></ul>`);
+  }
+}
+
+// ---- ADD MESSAGES ----
+function addUserMessage(text){
+  const msgs = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'msg user';
+  div.innerHTML = `<div class="msg-bubble">${escHtml(text)}</div><div class="msg-avatar"><i class="fas fa-user-tie"></i></div>`;
+  msgs.appendChild(div);
+  scrollChat();
+}
+function addBotMessage(html){
+  const msgs = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'msg bot';
+  div.innerHTML = `<div class="msg-avatar"><i class="fas fa-robot"></i></div><div class="msg-bubble">${html}</div>`;
+  msgs.appendChild(div);
+  scrollChat();
+}
+function addSuggestions(label, questions){
+  const msgs = document.getElementById('chatMessages');
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'display:flex;flex-direction:column;gap:6px;padding-left:36px;animation:msgIn 0.25s ease';
+  wrap.innerHTML = `<div style="font-size:0.68rem;color:var(--gray);font-weight:600;text-transform:uppercase;letter-spacing:0.4px">${label}</div>`;
+  questions.forEach(q=>{
+    const btn = document.createElement('button');
+    btn.style.cssText = 'background:white;border:1.5px solid var(--border);border-radius:8px;padding:6px 12px;font-family:inherit;font-size:0.78rem;color:var(--blue-dark);text-align:left;cursor:pointer;transition:all 0.2s;font-weight:500';
+    btn.textContent = q;
+    btn.onmouseover = ()=>{ btn.style.borderColor='var(--blue-mid)'; btn.style.background='var(--blue-pale)'; };
+    btn.onmouseout = ()=>{ btn.style.borderColor='var(--border)'; btn.style.background='white'; };
+    btn.onclick = ()=>{ sendQuick(q); wrap.remove(); };
+    wrap.appendChild(btn);
+  });
+  msgs.appendChild(wrap);
+  scrollChat();
+}
+
+// ---- TYPING ----
+let typingEl = null;
+function showTyping(){
+  const msgs = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'msg bot'; div.id = 'typingMsg';
+  div.innerHTML = `<div class="msg-avatar"><i class="fas fa-robot"></i></div><div class="msg-bubble"><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>`;
+  msgs.appendChild(div);
+  typingEl = div;
+  scrollChat();
+}
+function hideTyping(){ if(typingEl){ typingEl.remove(); typingEl=null; } }
+
+// ---- UTILS ----
+function scrollChat(){ const m=document.getElementById('chatMessages'); m.scrollTop=m.scrollHeight; }
+function clearChat(){
+  document.getElementById('chatMessages').innerHTML='';
+  document.getElementById('quickReplies').style.display='flex';
+  hasGreeted=false; greetUser(); hasGreeted=true;
+}
+function escHtml(t){ return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function autoResize(el){ el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,90)+'px'; }
+
+// ---- ADMIN CHAT MODE ----
+function toggleChatAdmin(){
+  currentTab = currentTab==='chat' ? 'admin' : 'chat';
+  switchChatTab(currentTab);
+}
+function switchChatTab(tab){
+  currentTab = tab;
+  document.getElementById('chatMsgsPanel').classList.toggle('hidden', tab!=='chat');
+  document.getElementById('chatAdminPanel').classList.toggle('active', tab==='admin');
+  document.querySelectorAll('.chat-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  if(tab==='admin') renderQAList();
+}
+// Show admin controls when main admin mode is active
+const origDoLogin = window.doLogin;
+document.addEventListener('DOMContentLoaded', ()=>{
+  // Hook admin mode to show chat admin button
+  const adminObserver = new MutationObserver(()=>{
+    const isAdm = document.getElementById('adminBtn').classList.contains('active');
+    document.getElementById('chatAdminToggle').style.display = isAdm ? 'flex' : 'none';
+    document.getElementById('chatTabs').style.display = isAdm ? 'flex' : 'none';
+    if(!isAdm && currentTab==='admin') switchChatTab('chat');
+  });
+  adminObserver.observe(document.getElementById('adminBtn'),{attributes:true,attributeFilter:['class']});
+});
+
+// ---- ADMIN Q&A MANAGER ----
+function renderQAList(){
+  const q = (document.getElementById('qaSearchInput').value||'').toLowerCase();
+  const all = getAllQA();
+  const filtered = q ? all.filter(e=>e.q.join(' ').toLowerCase().includes(q)||e.a.toLowerCase().includes(q)) : all;
+  const wrap = document.getElementById('adminQaList');
+  if(filtered.length===0){ wrap.innerHTML='<div style="text-align:center;color:var(--gray);font-size:0.82rem;padding:24px">Không tìm thấy câu hỏi nào.</div>'; return; }
+  wrap.innerHTML = filtered.map((e,i)=>`
+    <div class="admin-qa-item">
+      <div class="admin-qa-q">
+        <span>❓ ${escHtml(e.q[0])}${e.q.length>1?` <span style="color:var(--gray);font-weight:400">(+${e.q.length-1} từ khóa)</span>`:''}</span>
+        ${customQA.some(c=>c.id===e.id)?`<button class="admin-del-btn" onclick="deleteQA(${e.id})"><i class="fas fa-trash"></i></button>`:'<span style="font-size:0.65rem;color:#9ca3af;white-space:nowrap">Mặc định</span>'}
+      </div>
+      <div class="admin-qa-a">${e.a.replace(/<[^>]*>/g,'').substring(0,120)}...</div>
+      ${e.tags?`<div class="admin-qa-tags">${e.tags.map(t=>`<span class="admin-qa-tag">${t}</span>`).join('')}</div>`:''}
+    </div>`).join('');
+}
+function addQA(){
+  const qRaw = document.getElementById('newQaQuestion').value.trim();
+  const a = document.getElementById('newQaAnswer').value.trim();
+  const tagsRaw = document.getElementById('newQaTags').value.trim();
+  if(!qRaw||!a){ alert('Vui lòng nhập câu hỏi và câu trả lời.'); return; }
+  const keywords = qRaw.split('|').map(s=>s.trim().toLowerCase()).filter(Boolean);
+  const tags = tagsRaw ? tagsRaw.split(',').map(s=>s.trim()) : ['tùy chỉnh'];
+  const newEntry = { id: Date.now(), q: keywords, a: a, tags: tags, custom: true };
+  customQA.push(newEntry);
+  try{ sessionStorage.setItem('sme_custom_qa', JSON.stringify(customQA)); } catch(e){}
+  clearAddForm();
+  renderQAList();
+  showToast(`✅ Đã thêm câu hỏi: "${keywords[0]}"`);
+}
+function deleteQA(id){
+  if(!confirm('Xóa câu hỏi này?')) return;
+  customQA = customQA.filter(e=>e.id!==id);
+  try{ sessionStorage.setItem('sme_custom_qa', JSON.stringify(customQA)); } catch(e){}
+  renderQAList();
+  showToast('Đã xóa câu hỏi.');
+}
+function clearAddForm(){
+  document.getElementById('newQaQuestion').value='';
+  document.getElementById('newQaAnswer').value='';
+  document.getElementById('newQaTags').value='';
+}
+</script>
+</body>
+</html>
